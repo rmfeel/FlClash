@@ -20,6 +20,7 @@ import 'backup_and_recovery.dart';
 import 'config/advanced.dart';
 import 'developer.dart';
 import 'theme.dart';
+import 'xboard_settings.dart';
 
 class ToolsView extends ConsumerStatefulWidget {
   const ToolsView({super.key});
@@ -68,6 +69,7 @@ class _ToolViewState extends ConsumerState<ToolsView> {
     return generateSection(
       title: context.appLocalizations.settings,
       items: [
+        const _XboardSettingsItem(),
         const _LocaleItem(),
         const _ThemeItem(),
         const _BackupItem(),
@@ -79,6 +81,15 @@ class _ToolViewState extends ConsumerState<ToolsView> {
         const _SettingItem(),
       ],
     );
+  }
+
+  List<Widget> _getAccountList() {
+    return [
+      const ListHeader(title: '账户管理'),
+      const _AccountInfoItem(),
+      const Divider(height: 0),
+      const _LogoutItem(),
+    ];
   }
 
   @override
@@ -103,6 +114,7 @@ class _ToolViewState extends ConsumerState<ToolsView> {
           );
         },
       ),
+      ..._getAccountList(),
       ..._getSettingList(),
       ..._getOtherList(vm2.b),
     ];
@@ -150,6 +162,20 @@ class _LocaleItem extends ConsumerWidget {
         textBuilder: (locale) => _getLocaleString(locale),
         value: currentLocale,
       ),
+    );
+  }
+}
+
+class _XboardSettingsItem extends StatelessWidget {
+  const _XboardSettingsItem();
+
+  @override
+  Widget build(BuildContext context) {
+    return ListItem.open(
+      leading: const Icon(Icons.cloud),
+      title: const Text('Xboard 配置'),
+      subtitle: const Text('配置后端地址和账户信息'),
+      delegate: OpenDelegate(widget: const XboardSettings()),
     );
   }
 }
@@ -312,6 +338,67 @@ class _DeveloperItem extends StatelessWidget {
       leading: const Icon(Icons.developer_board),
       title: Text(context.appLocalizations.developerMode),
       delegate: OpenDelegate(widget: const DeveloperView()),
+    );
+  }
+}
+
+/// 账户信息项
+class _AccountInfoItem extends ConsumerWidget {
+  const _AccountInfoItem();
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final config = ref.watch(xboardConfigProvider);
+    
+    return ListItem(
+      leading: const Icon(Icons.person),
+      title: const Text('账户信息'),
+      subtitle: Text(config.userEmail ?? '未登录'),
+      onTap: () {
+        // 可以在这里添加跳转到账户详情页
+      },
+    );
+  }
+}
+
+/// 登出按钮
+class _LogoutItem extends ConsumerWidget {
+  const _LogoutItem();
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    return ListItem(
+      leading: const Icon(Icons.logout, color: Colors.red),
+      title: const Text('退出登录', style: TextStyle(color: Colors.red)),
+      onTap: () async {
+        final confirmed = await showDialog<bool>(
+          context: context,
+          builder: (context) => AlertDialog(
+            title: const Text('确认退出'),
+            content: const Text('退出登录后需要重新登录才能使用应用，确认退出吗？'),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.of(context).pop(false),
+                child: const Text('取消'),
+              ),
+              TextButton(
+                onPressed: () => Navigator.of(context).pop(true),
+                child: const Text('确认', style: TextStyle(color: Colors.red)),
+              ),
+            ],
+          ),
+        );
+
+        if (confirmed == true) {
+          await ref.read(xboardConfigProvider.notifier).logout();
+          
+          if (context.mounted) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(content: Text('已退出登录，请重新登录')),
+            );
+          }
+        }
+      },
     );
   }
 }
