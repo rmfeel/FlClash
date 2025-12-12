@@ -37,7 +37,7 @@ const defaultAccessControl = AccessControl();
 final defaultThemeProps = ThemeProps(primaryColor: defaultPrimaryColor);
 
 const List<DashboardWidget> defaultDashboardWidgets = [
-  DashboardWidget.networkSpeed,
+  DashboardWidget.subscriptionInfo,
   DashboardWidget.systemProxyButton,
   DashboardWidget.tunButton,
   DashboardWidget.outboundMode,
