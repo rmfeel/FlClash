@@ -32,6 +32,7 @@ class Navigation {
         label: PageLabel.profiles,
         builder: (_) =>
             const ProfilesView(key: GlobalObjectKey(PageLabel.profiles)),
+        modes: [], // 隐藏配置页面，由后端自动管理
       ),
       NavigationItem(
         icon: Icon(Icons.view_timeline),

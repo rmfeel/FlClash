@@ -614,10 +614,11 @@ class AppController {
   void initLink() {
     linkManager.initAppLinksListen((url) async {
       // 禁止第三方配置文件导入
+      final siteName = _ref.read(xboardConfigProvider).siteName;
       await globalState.showMessage(
         title: '不支持第三方配置',
-        message: const TextSpan(
-          text: '仅支持通过登录 Xboard 账号自动导入配置文件',
+        message: TextSpan(
+          text: '仅支持通过登录 $siteName 账号自动导入配置文件',
         ),
       );
     });
@@ -684,10 +685,11 @@ class AppController {
   Future<void> addProfileFormURL(String url, {bool isXboardAuto = false}) async {
     // 禁止第三方配置文件导入
     if (!isXboardAuto) {
+      final siteName = _ref.read(xboardConfigProvider).siteName;
       await globalState.showMessage(
         title: '不支持第三方配置',
-        message: const TextSpan(
-          text: '仅支持通过登录 Xboard 账号自动导入配置文件',
+        message: TextSpan(
+          text: '仅支持通过登录 $siteName 账号自动导入配置文件',
         ),
       );
       return;
@@ -712,20 +714,22 @@ class AppController {
 
   Future<void> addProfileFormFile() async {
     // 禁止第三方配置文件导入
+    final siteName = _ref.read(xboardConfigProvider).siteName;
     await globalState.showMessage(
       title: '不支持第三方配置',
-      message: const TextSpan(
-        text: '仅支持通过登录 Xboard 账号自动导入配置文件',
+      message: TextSpan(
+        text: '仅支持通过登录 $siteName 账号自动导入配置文件',
       ),
     );
   }
 
   Future<void> addProfileFormQrCode() async {
     // 禁止第三方配置文件导入
+    final siteName = _ref.read(xboardConfigProvider).siteName;
     await globalState.showMessage(
       title: '不支持第三方配置',
-      message: const TextSpan(
-        text: '仅支持通过登录 Xboard 账号自动导入配置文件',
+      message: TextSpan(
+        text: '仅支持通过登录 $siteName 账号自动导入配置文件',
       ),
     );
   }

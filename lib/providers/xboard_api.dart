@@ -45,6 +45,12 @@ class XboardApi {
       'email': email,
     });
   }
+
+  /// 获取站点配置（包括站点名称）
+  Future<Map<String, dynamic>> getConfig() async {
+    final response = await _dio.get('/api/v1/client/app/config');
+    return response.data as Map<String, dynamic>;
+  }
 }
 
 final xboardApiProvider = Provider<XboardApi?>((ref) {

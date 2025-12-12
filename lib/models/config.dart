@@ -50,10 +50,16 @@ List<DashboardWidget> dashboardWidgetsSafeFormJson(
   List<dynamic>? dashboardWidgets,
 ) {
   try {
-    return dashboardWidgets
+    var widgets = dashboardWidgets
             ?.map((e) => $enumDecode(_$DashboardWidgetEnumMap, e))
             .toList() ??
         defaultDashboardWidgets;
+    
+    // 强制确保订阅信息卡片始终在第一个位置
+    widgets.remove(DashboardWidget.subscriptionInfo);
+    widgets.insert(0, DashboardWidget.subscriptionInfo);
+    
+    return widgets;
   } catch (_) {
     return defaultDashboardWidgets;
   }

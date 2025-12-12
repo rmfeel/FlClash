@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:dio/dio.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:fl_clash/models/xboard_config.dart' as models;
@@ -51,10 +52,24 @@ class XboardConfig extends _$XboardConfig {
     required String token,
     required String email,
   }) async {
+    // 获取站点名称
+    String siteName = 'Xboard'; // 默认值
+    try {
+      if (state.backendUrl != null && state.backendUrl!.isNotEmpty) {
+        final dio = Dio(BaseOptions(baseUrl: state.backendUrl!));
+        final response = await dio.get('/api/v1/client/app/config');
+        final data = response.data as Map<String, dynamic>;
+        siteName = data['data']?['site']?['app_name'] as String? ?? 'Xboard';
+      }
+    } catch (e) {
+      print('获取站点名称失败: $e');
+    }
+    
     state = state.copyWith(
       authToken: token,
       userEmail: email,
       isLoggedIn: true,
+      siteName: siteName,
     );
     await _saveConfig();
   }

@@ -1,10 +1,12 @@
 import 'package:fl_clash/common/common.dart';
 import 'package:fl_clash/pages/scan.dart';
+import 'package:fl_clash/providers/xboard_config.dart';
 import 'package:fl_clash/state.dart';
 import 'package:fl_clash/widgets/widgets.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class AddProfileView extends StatelessWidget {
+class AddProfileView extends ConsumerWidget {
   final BuildContext context;
 
   const AddProfileView({
@@ -60,7 +62,9 @@ class AddProfileView extends StatelessWidget {
   }
 
   @override
-  Widget build(context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final siteName = ref.watch(xboardConfigProvider).siteName;
+    
     return Center(
       child: Padding(
         padding: const EdgeInsets.all(24.0),
@@ -83,7 +87,7 @@ class AddProfileView extends StatelessWidget {
             ),
             const SizedBox(height: 8),
             Text(
-              '请通过登录账号自动导入配置文件',
+              '请通过登录 $siteName 账号自动导入配置文件',
               textAlign: TextAlign.center,
               style: TextStyle(
                 color: Colors.grey[600],

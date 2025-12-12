@@ -3,12 +3,14 @@ class XboardConfig {
   final String? authToken;
   final String? userEmail;
   final bool isLoggedIn;
+  final String siteName; // 站点名称
 
   const XboardConfig({
     this.backendUrl,
     this.authToken,
     this.userEmail,
     this.isLoggedIn = false,
+    this.siteName = 'Xboard',
   });
 
   XboardConfig copyWith({
@@ -16,12 +18,14 @@ class XboardConfig {
     String? authToken,
     String? userEmail,
     bool? isLoggedIn,
+    String? siteName,
   }) {
     return XboardConfig(
       backendUrl: backendUrl ?? this.backendUrl,
       authToken: authToken ?? this.authToken,
       userEmail: userEmail ?? this.userEmail,
       isLoggedIn: isLoggedIn ?? this.isLoggedIn,
+      siteName: siteName ?? this.siteName,
     );
   }
 
@@ -31,6 +35,7 @@ class XboardConfig {
       'authToken': authToken,
       'userEmail': userEmail,
       'isLoggedIn': isLoggedIn,
+      'siteName': siteName,
     };
   }
 
@@ -40,6 +45,7 @@ class XboardConfig {
       authToken: json['authToken'] as String?,
       userEmail: json['userEmail'] as String?,
       isLoggedIn: json['isLoggedIn'] as bool? ?? false,
+      siteName: json['siteName'] as String? ?? 'Xboard',
     );
   }
 }
