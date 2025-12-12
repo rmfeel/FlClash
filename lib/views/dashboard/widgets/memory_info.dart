@@ -7,8 +7,6 @@ import 'package:fl_clash/state.dart';
 import 'package:fl_clash/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 
-final _memoryStateNotifier = ValueNotifier<num>(0);
-
 class MemoryInfo extends StatefulWidget {
   const MemoryInfo({super.key});
 
@@ -17,17 +15,20 @@ class MemoryInfo extends StatefulWidget {
 }
 
 class _MemoryInfoState extends State<MemoryInfo> {
+  late final ValueNotifier<num> _memoryStateNotifier;
   Timer? timer;
 
   @override
   void initState() {
     super.initState();
+    _memoryStateNotifier = ValueNotifier<num>(0);
     _updateMemory();
   }
 
   @override
   void dispose() {
     timer?.cancel();
+    _memoryStateNotifier.dispose();
     super.dispose();
   }
 
