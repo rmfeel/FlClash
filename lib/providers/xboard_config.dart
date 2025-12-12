@@ -9,6 +9,8 @@ class XboardConfigNotifier extends StateNotifier<XboardConfig> {
   }
 
   static const String _configKey = 'xboard_config';
+  // 默认后端地址 - 在这里修改你的 Xboard 后端地址
+  static const String defaultBackendUrl = 'https://your-xboard.com';
 
   Future<void> _loadConfig() async {
     final prefs = await SharedPreferences.getInstance();
@@ -18,8 +20,13 @@ class XboardConfigNotifier extends StateNotifier<XboardConfig> {
         final config = XboardConfig.fromJson(json.decode(configJson));
         state = config;
       } catch (e) {
-        // 解析失败，保持默认状态
+        // 解析失败，使用默认地址
+        state = XboardConfig(backendUrl: defaultBackendUrl);
       }
+    } else {
+      // 首次启动，使用默认地址
+      state = XboardConfig(backendUrl: defaultBackendUrl);
+      await _saveConfig();
     }
   }
 
