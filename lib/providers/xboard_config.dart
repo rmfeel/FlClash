@@ -3,7 +3,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:fl_clash/models/xboard_config.dart' as models;
 
-part 'xboard_config.g.dart';
+part 'generated/xboard_config.g.dart';
 
 // 默认后端地址 - 在这里修改你的 Xboard 后端地址
 const String defaultBackendUrl = 'https://cdn.98kjc.icu';
