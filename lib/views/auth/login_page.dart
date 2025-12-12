@@ -54,49 +54,40 @@ class _LoginPageState extends ConsumerState<LoginPage> {
             );
 
         // 登录成功后获取订阅信息
+        String? subscribeUrl;
         try {
           final subInfo = await api.getSubscriptionInfo(token);
           print('订阅信息响应: $subInfo');
           
           if (subInfo['data'] != null && subInfo['data']['subscribe_url'] != null) {
-            final subscribeUrl = subInfo['data']['subscribe_url'] as String;
+            subscribeUrl = subInfo['data']['subscribe_url'] as String;
             print('订阅链接: $subscribeUrl');
-            
-            // 自动导入订阅配置
-            if (mounted) {
-              try {
-                globalState.appController.addProfileFormURL(subscribeUrl);
-                ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(
-                    content: Text('登录成功！正在自动导入订阅配置...'),
-                    duration: Duration(seconds: 3),
-                  ),
-                );
-              } catch (importError) {
-                print('导入配置失败: $importError');
-                ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(
-                    content: Text('登录成功，但导入配置失败：$importError'),
-                    duration: const Duration(seconds: 5),
-                  ),
-                );
-              }
-            }
           } else {
             print('订阅信息中未找到 subscribe_url');
-            if (mounted) {
-              ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(content: Text('登录成功')),
-              );
-            }
           }
         } catch (e) {
-          // 忽略获取订阅信息失败，不影响登录
           print('获取订阅信息失败: $e');
-          if (mounted) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(content: Text('登录成功')),
-            );
+        }
+
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text('登录成功')),
+          );
+          
+          // 如果获取到订阅链接，延迟导入
+          if (subscribeUrl != null) {
+            Future.delayed(const Duration(milliseconds: 500), () {
+              if (mounted) {
+                try {
+                  globalState.appController.addProfileFormURL(subscribeUrl!);
+                } catch (e) {
+                  print('自动导入失败: $e');
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(content: Text('自动导入订阅失败，请手动添加：$subscribeUrl')),
+                  );
+                }
+              }
+            });
           }
         }
       } else {
