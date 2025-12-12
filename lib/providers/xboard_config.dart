@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:fl_clash/models/xboard_config.dart' as models;
+import 'package:fl_clash/state.dart';
 
 part 'generated/xboard_config.g.dart';
 
@@ -65,6 +66,25 @@ class XboardConfig extends _$XboardConfig {
       isLoggedIn: false,
     );
     await _saveConfig();
+    
+    // 退出登录时自动关闭VPN连接并清除订阅配置
+    try {
+      if (globalState.isInit) {
+        // 1. 关闭VPN连接
+        if (globalState.isStart) {
+          await globalState.appController.updateStatus(false);
+        }
+        
+        // 2. 删除所有订阅配置文件
+        final profiles = globalState.config.profiles;
+        for (final profile in profiles) {
+          await globalState.appController.deleteProfile(profile.id);
+        }
+      }
+    } catch (e) {
+      // 忽略清理失败的错误
+      print('清理VPN和订阅配置失败: $e');
+    }
   }
 
   Future<void> updateToken(String token) async {

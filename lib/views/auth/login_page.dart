@@ -52,45 +52,16 @@ class _LoginPageState extends ConsumerState<LoginPage> {
               email: _emailController.text.trim(),
             );
 
-        // 登录成功后获取订阅信息
-        try {
-          final subInfo = await api.getSubscriptionInfo(token);
-          print('订阅信息响应: $subInfo');
-          
-          if (subInfo['data'] != null) {
-            final subscribeUrl = subInfo['data']['subscribe_url'] as String?;
-            
-            if (mounted) {
-              // 显示登录成功提示
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(
-                  content: Text(
-                    subscribeUrl != null 
-                      ? '登录成功！订阅链接：$subscribeUrl' 
-                      : '登录成功！',
-                  ),
-                  duration: const Duration(seconds: 3),
-                  backgroundColor: Colors.green,
-                ),
-              );
-              
-              // 返回主页
-              Navigator.of(context).pop();
-            }
-          }
-        } catch (e) {
-          // 忽略获取订阅信息失败，不影响登录
-          print('获取订阅信息失败: $e');
-          
-          if (mounted) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(
-                content: Text('登录成功！'),
-                backgroundColor: Colors.green,
-              ),
-            );
-            Navigator.of(context).pop();
-          }
+        // 登录成功
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text('登录成功！'),
+              backgroundColor: Colors.green,
+              duration: Duration(seconds: 2),
+            ),
+          );
+          Navigator.of(context).pop();
         }
       } else {
         throw Exception('登录失败：响应数据格式错误');

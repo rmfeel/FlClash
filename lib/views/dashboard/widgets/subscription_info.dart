@@ -1,6 +1,7 @@
 import 'package:fl_clash/common/common.dart';
 import 'package:fl_clash/providers/xboard_api.dart';
 import 'package:fl_clash/providers/xboard_config.dart';
+import 'package:fl_clash/state.dart';
 import 'package:fl_clash/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -16,6 +17,7 @@ class _SubscriptionInfoState extends ConsumerState<SubscriptionInfo> {
   Map<String, dynamic>? _subscriptionData;
   bool _isLoading = false;
   String? _error;
+  bool _hasAutoImported = false; // 标记是否已自动导入
 
   @override
   void initState() {
@@ -39,12 +41,20 @@ class _SubscriptionInfoState extends ConsumerState<SubscriptionInfo> {
     try {
       final result = await api.getSubscriptionInfo(config.authToken!);
       if (mounted) {
-        // 打印调试信息
         print('订阅信息：${result['data']}');
         setState(() {
           _subscriptionData = result['data'];
           _isLoading = false;
         });
+        
+        // 自动导入订阅配置（仅第一次）
+        if (!_hasAutoImported && _subscriptionData != null) {
+          final subscribeUrl = _subscriptionData!['subscribe_url'] as String?;
+          if (subscribeUrl != null && subscribeUrl.isNotEmpty) {
+            _hasAutoImported = true;
+            _autoImportProfile(subscribeUrl);
+          }
+        }
       }
     } catch (e) {
       print('加载订阅信息失败: $e');
@@ -53,6 +63,35 @@ class _SubscriptionInfoState extends ConsumerState<SubscriptionInfo> {
           _error = '加载失败：${e.toString()}';
           _isLoading = false;
         });
+      }
+    }
+  }
+
+  Future<void> _autoImportProfile(String subscribeUrl) async {
+    try {
+      print('自动导入订阅配置: $subscribeUrl');
+      
+      // 使用 globalState.appController 导入订阅
+      await globalState.appController.addProfileFormURL(subscribeUrl);
+      
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('订阅配置已自动导入！'),
+            backgroundColor: Colors.green,
+            duration: Duration(seconds: 2),
+          ),
+        );
+      }
+    } catch (e) {
+      print('自动导入失败: $e');
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('自动导入失败：$e'),
+            backgroundColor: Colors.orange,
+          ),
+        );
       }
     }
   }
