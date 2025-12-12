@@ -5,6 +5,7 @@ publisher: chen08209
 publisher_url: https://github.com/chen08209/FlClash
 display_name: RMMY
 executable_name: RMMY.exe
+install_dir_name: "{autopf}\\RMMY"
 output_base_file_name: RMMY-Installer.exe
 setup_icon_file: ..\windows\runner\resources\app_icon.ico
 locales:
