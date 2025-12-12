@@ -54,11 +54,12 @@ class _LoginPageState extends ConsumerState<LoginPage> {
 
         // 登录成功，不需要手动导航，AuthCheckPage 会自动响应状态变化
         if (mounted) {
+          final siteName = ref.read(xboardConfigProvider).siteName;
           ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(
-              content: Text('登录成功！'),
+            SnackBar(
+              content: Text('欢迎使用 $siteName！'),
               backgroundColor: Colors.green,
-              duration: Duration(seconds: 2),
+              duration: const Duration(seconds: 3),
             ),
           );
           // 不调用 Navigator.pop()，让 AuthCheckPage 自动处理页面切换
