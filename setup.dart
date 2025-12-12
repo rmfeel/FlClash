@@ -222,6 +222,13 @@ class Build {
         '-o',
         realOutPath,
       ];
+      // Run go mod tidy first to update dependencies
+      await exec(
+        ['go', 'mod', 'tidy'],
+        name: 'go mod tidy',
+        environment: env,
+        workingDirectory: _coreDir,
+      );
       await exec(
         execLines,
         name: 'build core',
