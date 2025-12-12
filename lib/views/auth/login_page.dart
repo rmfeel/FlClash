@@ -52,6 +52,29 @@ class _LoginPageState extends ConsumerState<LoginPage> {
               email: _emailController.text.trim(),
             );
 
+        // 登录成功后获取订阅信息
+        try {
+          final subInfo = await api.getSubscriptionInfo(token);
+          if (subInfo['data'] != null && subInfo['data']['subscribe_url'] != null) {
+            final subscribeUrl = subInfo['data']['subscribe_url'] as String;
+            
+            // TODO: 自动导入订阅配置
+            // 这里需要调用 FlClash 的配置导入功能
+            // 暂时先显示订阅链接
+            if (mounted) {
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content: Text('登录成功！订阅链接：$subscribeUrl'),
+                  duration: const Duration(seconds: 5),
+                ),
+              );
+            }
+          }
+        } catch (e) {
+          // 忽略获取订阅信息失败，不影响登录
+          print('获取订阅信息失败: $e');
+        }
+
         if (mounted) {
           ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(content: Text('登录成功')),

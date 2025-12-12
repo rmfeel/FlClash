@@ -39,15 +39,18 @@ class _SubscriptionInfoState extends ConsumerState<SubscriptionInfo> {
     try {
       final result = await api.getSubscriptionInfo(config.authToken!);
       if (mounted) {
+        // 打印调试信息
+        print('订阅信息：${result['data']}');
         setState(() {
           _subscriptionData = result['data'];
           _isLoading = false;
         });
       }
     } catch (e) {
+      print('加载订阅信息失败: $e');
       if (mounted) {
         setState(() {
-          _error = '加载失败';
+          _error = '加载失败：${e.toString()}';
           _isLoading = false;
         });
       }
@@ -128,7 +131,9 @@ class _SubscriptionInfoState extends ConsumerState<SubscriptionInfo> {
                               children: [
                                 Expanded(
                                   child: Text(
-                                    _subscriptionData!['plan_name'] ?? '未知套餐',
+                                    _subscriptionData!['plan']?['name'] ?? 
+                                    _subscriptionData!['plan_name'] ?? 
+                                    '未知套餐',
                                     style: context.textTheme.bodyMedium?.copyWith(
                                       fontWeight: FontWeight.bold,
                                     ),
