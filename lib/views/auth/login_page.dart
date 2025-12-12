@@ -2,6 +2,7 @@ import 'package:fl_clash/providers/xboard_api.dart';
 import 'package:fl_clash/providers/xboard_config.dart';
 import 'package:fl_clash/views/auth/register_page.dart';
 import 'package:fl_clash/views/auth/forgot_password_page.dart';
+import 'package:fl_clash/state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -58,27 +59,31 @@ class _LoginPageState extends ConsumerState<LoginPage> {
           if (subInfo['data'] != null && subInfo['data']['subscribe_url'] != null) {
             final subscribeUrl = subInfo['data']['subscribe_url'] as String;
             
-            // TODO: 自动导入订阅配置
-            // 这里需要调用 FlClash 的配置导入功能
-            // 暂时先显示订阅链接
+            // 自动导入订阅配置
+            if (mounted) {
+              globalState.appController.addProfileFormURL(subscribeUrl);
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(
+                  content: Text('登录成功！正在自动导入订阅配置...'),
+                  duration: Duration(seconds: 3),
+                ),
+              );
+            }
+          } else {
             if (mounted) {
               ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(
-                  content: Text('登录成功！订阅链接：$subscribeUrl'),
-                  duration: const Duration(seconds: 5),
-                ),
+                const SnackBar(content: Text('登录成功')),
               );
             }
           }
         } catch (e) {
           // 忽略获取订阅信息失败，不影响登录
           print('获取订阅信息失败: $e');
-        }
-
-        if (mounted) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text('登录成功')),
-          );
+          if (mounted) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(content: Text('登录成功')),
+            );
+          }
         }
       } else {
         throw Exception('登录失败：响应数据格式错误');
