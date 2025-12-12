@@ -81,7 +81,12 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: artifact-${{ matrix.platform }}${{ matrix.arch && format('-{0}', matrix.arch) }}
-          path: ./dist
+          # 修改這裡：同時尋找 dist 目錄和 Windows 的原始構建目錄
+          path: |
+            ./dist/*
+            build/windows/runner/Release/*.exe
+            build/windows/x64/runner/Release/*.exe
+          if-no-files-found: warn
           overwrite: true
 
   changelog:
