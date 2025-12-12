@@ -52,7 +52,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
               email: _emailController.text.trim(),
             );
 
-        // 登录成功
+        // 登录成功，不需要手动导航，AuthCheckPage 会自动响应状态变化
         if (mounted) {
           ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(
@@ -61,7 +61,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
               duration: Duration(seconds: 2),
             ),
           );
-          Navigator.of(context).pop();
+          // 不调用 Navigator.pop()，让 AuthCheckPage 自动处理页面切换
         }
       } else {
         throw Exception('登录失败：响应数据格式错误');
