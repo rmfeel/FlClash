@@ -2,7 +2,6 @@ import 'package:fl_clash/providers/xboard_api.dart';
 import 'package:fl_clash/providers/xboard_config.dart';
 import 'package:fl_clash/views/auth/register_page.dart';
 import 'package:fl_clash/views/auth/forgot_password_page.dart';
-import 'package:fl_clash/state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -54,40 +53,43 @@ class _LoginPageState extends ConsumerState<LoginPage> {
             );
 
         // 登录成功后获取订阅信息
-        String? subscribeUrl;
         try {
           final subInfo = await api.getSubscriptionInfo(token);
           print('订阅信息响应: $subInfo');
           
-          if (subInfo['data'] != null && subInfo['data']['subscribe_url'] != null) {
-            subscribeUrl = subInfo['data']['subscribe_url'] as String;
-            print('订阅链接: $subscribeUrl');
-          } else {
-            print('订阅信息中未找到 subscribe_url');
+          if (subInfo['data'] != null) {
+            final subscribeUrl = subInfo['data']['subscribe_url'] as String?;
+            
+            if (mounted) {
+              // 显示登录成功提示
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content: Text(
+                    subscribeUrl != null 
+                      ? '登录成功！订阅链接：$subscribeUrl' 
+                      : '登录成功！',
+                  ),
+                  duration: const Duration(seconds: 3),
+                  backgroundColor: Colors.green,
+                ),
+              );
+              
+              // 返回主页
+              Navigator.of(context).pop();
+            }
           }
         } catch (e) {
+          // 忽略获取订阅信息失败，不影响登录
           print('获取订阅信息失败: $e');
-        }
-
-        if (mounted) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text('登录成功')),
-          );
           
-          // 如果获取到订阅链接，延迟导入
-          if (subscribeUrl != null) {
-            Future.delayed(const Duration(milliseconds: 500), () {
-              if (mounted) {
-                try {
-                  globalState.appController.addProfileFormURL(subscribeUrl!);
-                } catch (e) {
-                  print('自动导入失败: $e');
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(content: Text('自动导入订阅失败，请手动添加：$subscribeUrl')),
-                  );
-                }
-              }
-            });
+          if (mounted) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(
+                content: Text('登录成功！'),
+                backgroundColor: Colors.green,
+              ),
+            );
+            Navigator.of(context).pop();
           }
         }
       } else {
