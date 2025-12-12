@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:fl_clash/models/xboard_config.dart';
+import 'package:fl_clash/models/xboard_config.dart' as models;
 
 part 'xboard_config.g.dart';
 
