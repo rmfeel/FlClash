@@ -61,27 +61,37 @@ class AddProfileView extends StatelessWidget {
 
   @override
   Widget build(context) {
-    return ListView(
-      children: [
-        ListItem(
-          leading: const Icon(Icons.qr_code_sharp),
-          title: Text(appLocalizations.qrcode),
-          subtitle: Text(appLocalizations.qrcodeDesc),
-          onTap: _toScan,
+    return Center(
+      child: Padding(
+        padding: const EdgeInsets.all(24.0),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(
+              Icons.block,
+              size: 64,
+              color: Colors.grey[400],
+            ),
+            const SizedBox(height: 16),
+            Text(
+              '第三方不受支持的订阅配置',
+              style: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+                color: Colors.grey[700],
+              ),
+            ),
+            const SizedBox(height: 8),
+            Text(
+              '请通过登录账号自动导入配置文件',
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                color: Colors.grey[600],
+              ),
+            ),
+          ],
         ),
-        ListItem(
-          leading: const Icon(Icons.upload_file_sharp),
-          title: Text(appLocalizations.file),
-          subtitle: Text(appLocalizations.fileDesc),
-          onTap: _handleAddProfileFormFile,
-        ),
-        ListItem(
-          leading: const Icon(Icons.cloud_download_sharp),
-          title: Text(appLocalizations.url),
-          subtitle: Text(appLocalizations.urlDesc),
-          onTap: _toAdd,
-        )
-      ],
+      ),
     );
   }
 }

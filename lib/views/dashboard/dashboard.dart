@@ -4,6 +4,8 @@ import 'package:defer_pointer/defer_pointer.dart';
 import 'package:fl_clash/common/common.dart';
 import 'package:fl_clash/enum/enum.dart';
 import 'package:fl_clash/providers/providers.dart';
+import 'package:fl_clash/providers/xboard_api.dart';
+import 'package:fl_clash/providers/xboard_config.dart';
 import 'package:fl_clash/state.dart';
 import 'package:fl_clash/widgets/widgets.dart';
 import 'package:flutter/material.dart';
@@ -26,10 +28,116 @@ class _DashboardViewState extends ConsumerState<DashboardView> {
   final _addedWidgetsNotifier = ValueNotifier<List<GridItem>>([]);
 
   @override
+  void initState() {
+    super.initState();
+    // 延迟执行，确保 ref 可用
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _autoImportProfileIfNeeded();
+    });
+  }
+
+  @override
   dispose() {
     _isEditNotifier.dispose();
     _addedWidgetsNotifier.dispose();
     super.dispose();
+  }
+
+  /// 自动导入订阅配置（如果已登录且未导入）
+  Future<void> _autoImportProfileIfNeeded() async {
+    final xboardConfig = ref.read(xboardConfigProvider);
+    final xboardApi = ref.read(xboardApiProvider);
+    
+    // 检查是否已登录
+    if (!xboardConfig.isLoggedIn || xboardConfig.authToken == null || xboardApi == null) {
+      return;
+    }
+    
+    // 检查并删除第三方配置文件
+    await _removeThirdPartyProfiles();
+    
+    // 检查是否已存在配置文件
+    final profiles = globalState.config.profiles;
+    if (profiles.isNotEmpty) {
+      print('已存在配置文件，跳过自动导入');
+      return;
+    }
+    
+    try {
+      // 获取订阅信息
+      final result = await xboardApi.getSubscriptionInfo(xboardConfig.authToken!);
+      final subscribeUrl = result['data']?['subscribe_url'] as String?;
+      
+      if (subscribeUrl != null && subscribeUrl.isNotEmpty) {
+        print('仪表盘自动导入订阅配置: $subscribeUrl');
+        
+        // 导入订阅配置（标记为 Xboard 自动导入）
+        await globalState.appController.addProfileFormURL(subscribeUrl, isXboardAuto: true);
+        
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text('订阅配置已自动导入！'),
+              backgroundColor: Colors.green,
+              duration: Duration(seconds: 2),
+            ),
+          );
+        }
+      }
+    } catch (e) {
+      print('自动导入失败: $e');
+      // 静默失败，不影响用户体验
+    }
+  }
+
+  /// 检测并删除第三方配置文件
+  Future<void> _removeThirdPartyProfiles() async {
+    try {
+      final xboardConfig = ref.read(xboardConfigProvider);
+      final xboardApi = ref.read(xboardApiProvider);
+      
+      // 获取当前所有配置文件
+      final profiles = globalState.config.profiles.toList();
+      if (profiles.isEmpty) {
+        return;
+      }
+      
+      // 获取 Xboard 订阅 URL
+      String? xboardSubscribeUrl;
+      try {
+        if (xboardConfig.authToken != null && xboardApi != null) {
+          final result = await xboardApi.getSubscriptionInfo(xboardConfig.authToken!);
+          xboardSubscribeUrl = result['data']?['subscribe_url'] as String?;
+        }
+      } catch (e) {
+        print('获取 Xboard 订阅链接失败: $e');
+      }
+      
+      // 检测并删除第三方配置文件
+      int deletedCount = 0;
+      for (final profile in profiles) {
+        // 判断是否为第三方配置文件（URL 不匹配 Xboard 订阅链接）
+        final isThirdParty = xboardSubscribeUrl == null || profile.url != xboardSubscribeUrl;
+        
+        if (isThirdParty) {
+          print('检测到第三方配置文件，自动删除: ${profile.label ?? profile.id}');
+          await globalState.appController.deleteProfile(profile.id);
+          deletedCount++;
+        }
+      }
+      
+      if (deletedCount > 0 && mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('已自动删除 $deletedCount 个第三方配置文件'),
+            backgroundColor: Colors.orange,
+            duration: const Duration(seconds: 3),
+          ),
+        );
+      }
+    } catch (e) {
+      print('删除第三方配置文件失败: $e');
+    }
   }
 
   Widget _buildIsEdit(_IsEditWidgetBuilder builder) {

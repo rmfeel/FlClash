@@ -613,30 +613,13 @@ class AppController {
 
   void initLink() {
     linkManager.initAppLinksListen((url) async {
-      final res = await globalState.showMessage(
-        title: '${appLocalizations.add}${appLocalizations.profile}',
-        message: TextSpan(
-          children: [
-            TextSpan(text: appLocalizations.doYouWantToPass),
-            TextSpan(
-              text: ' $url ',
-              style: TextStyle(
-                color: Theme.of(context).colorScheme.primary,
-                decoration: TextDecoration.underline,
-                decorationColor: Theme.of(context).colorScheme.primary,
-              ),
-            ),
-            TextSpan(
-              text: '${appLocalizations.create}${appLocalizations.profile}',
-            ),
-          ],
+      // 禁止第三方配置文件导入
+      await globalState.showMessage(
+        title: '不支持第三方配置',
+        message: const TextSpan(
+          text: '仅支持通过登录 Xboard 账号自动导入配置文件',
         ),
       );
-
-      if (res != true) {
-        return;
-      }
-      addProfileFormURL(url);
     });
   }
 
@@ -698,7 +681,18 @@ class AppController {
     return;
   }
 
-  Future<void> addProfileFormURL(String url) async {
+  Future<void> addProfileFormURL(String url, {bool isXboardAuto = false}) async {
+    // 禁止第三方配置文件导入
+    if (!isXboardAuto) {
+      await globalState.showMessage(
+        title: '不支持第三方配置',
+        message: const TextSpan(
+          text: '仅支持通过登录 Xboard 账号自动导入配置文件',
+        ),
+      );
+      return;
+    }
+    
     if (globalState.navigatorKey.currentState?.canPop() ?? false) {
       globalState.navigatorKey.currentState?.popUntil((route) => route.isFirst);
     }
@@ -717,32 +711,23 @@ class AppController {
   }
 
   Future<void> addProfileFormFile() async {
-    final platformFile = await safeRun(picker.pickerFile);
-    final bytes = platformFile?.bytes;
-    if (bytes == null) {
-      return;
-    }
-    if (!context.mounted) return;
-    globalState.navigatorKey.currentState?.popUntil((route) => route.isFirst);
-    toProfiles();
-
-    final profile = await safeRun(
-      () async {
-        await Future.delayed(const Duration(milliseconds: 300));
-        return await Profile.normal(label: platformFile?.name).saveFile(bytes);
-      },
-      needLoading: true,
-      title: '${appLocalizations.add}${appLocalizations.profile}',
+    // 禁止第三方配置文件导入
+    await globalState.showMessage(
+      title: '不支持第三方配置',
+      message: const TextSpan(
+        text: '仅支持通过登录 Xboard 账号自动导入配置文件',
+      ),
     );
-    if (profile != null) {
-      await addProfile(profile);
-    }
   }
 
   Future<void> addProfileFormQrCode() async {
-    final url = await safeRun(picker.pickerConfigQRCode);
-    if (url == null) return;
-    addProfileFormURL(url);
+    // 禁止第三方配置文件导入
+    await globalState.showMessage(
+      title: '不支持第三方配置',
+      message: const TextSpan(
+        text: '仅支持通过登录 Xboard 账号自动导入配置文件',
+      ),
+    );
   }
 
   void updateViewSize(Size size) {

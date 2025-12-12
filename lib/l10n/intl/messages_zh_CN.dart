@@ -414,7 +414,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "profilesSort": MessageLookupByLibrary.simpleMessage("配置排序"),
     "project": MessageLookupByLibrary.simpleMessage("项目"),
     "providers": MessageLookupByLibrary.simpleMessage("提供者"),
-    "proxies": MessageLookupByLibrary.simpleMessage("代理"),
+    "proxies": MessageLookupByLibrary.simpleMessage("节点"),
     "proxiesSetting": MessageLookupByLibrary.simpleMessage("代理设置"),
     "proxyChains": MessageLookupByLibrary.simpleMessage("代理链"),
     "proxyGroup": MessageLookupByLibrary.simpleMessage("代理组"),
