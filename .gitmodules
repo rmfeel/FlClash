@@ -1,7 +1,7 @@
 [submodule "core/Clash.Meta"]
 	path = core/Clash.Meta
 	url = https://github.com/MetaCubeX/mihomo.git
-	branch = Alpha
+	branch = Meta
 [submodule "plugins/flutter_distributor"]
 	path = plugins/flutter_distributor
 	url = https://github.com/leanflutter/flutter_distributor.git
