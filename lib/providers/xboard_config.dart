@@ -10,7 +10,7 @@ class XboardConfigNotifier extends StateNotifier<XboardConfig> {
 
   static const String _configKey = 'xboard_config';
   // 默认后端地址 - 在这里修改你的 Xboard 后端地址
-  static const String defaultBackendUrl = 'https://your-xboard.com';
+  static const String defaultBackendUrl = 'https://cdn.98kjc.icu';
 
   Future<void> _loadConfig() async {
     final prefs = await SharedPreferences.getInstance();

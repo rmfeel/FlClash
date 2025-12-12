@@ -20,7 +20,6 @@ import 'backup_and_recovery.dart';
 import 'config/advanced.dart';
 import 'developer.dart';
 import 'theme.dart';
-import 'xboard_settings.dart';
 
 class ToolsView extends ConsumerStatefulWidget {
   const ToolsView({super.key});
@@ -69,7 +68,6 @@ class _ToolViewState extends ConsumerState<ToolsView> {
     return generateSection(
       title: context.appLocalizations.settings,
       items: [
-        const _XboardSettingsItem(),
         const _LocaleItem(),
         const _ThemeItem(),
         const _BackupItem(),
@@ -162,20 +160,6 @@ class _LocaleItem extends ConsumerWidget {
         textBuilder: (locale) => _getLocaleString(locale),
         value: currentLocale,
       ),
-    );
-  }
-}
-
-class _XboardSettingsItem extends StatelessWidget {
-  const _XboardSettingsItem();
-
-  @override
-  Widget build(BuildContext context) {
-    return ListItem.open(
-      leading: const Icon(Icons.cloud),
-      title: const Text('Xboard 配置'),
-      subtitle: const Text('配置后端地址和账户信息'),
-      delegate: OpenDelegate(widget: const XboardSettings()),
     );
   }
 }
