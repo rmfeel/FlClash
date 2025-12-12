@@ -1,3 +1,27 @@
+## v1.0.6
+
+- 修正part路径为generated/xboard_config.g.dart
+
+- 添加build_runner代码生成步骤
+
+- 修复XboardConfig类名冲突
+
+- 修复xboard_config.dart使用riverpod_annotation
+
+- 添加订阅信息卡片，删除Xboard配置界面，优化后端地址配置
+
+- 删除Xboard配置界面，后端地址改为代码配置
+
+## v1.0.5
+
+- 添加默认后端地址配置
+
+## v1.0.4
+
+- 完善Xboard配置界面和账户管理功能
+
+- 添加Xboard对接和强制登录功能
+
 ## v1.0.3
 
 - 只构建Android和Windows平台
