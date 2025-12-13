@@ -1,9 +1,11 @@
+// Core barrel file for common utilities.
+// NOTE: Files that import models/models.dart are NOT exported here to prevent circular dependencies.
+// Import them directly when needed: compute.dart, constant.dart, context.dart, dav_client.dart,
+// navigation.dart, navigator.dart, num.dart, preferences.dart, print.dart, request.dart, tray.dart, window.dart
+
 export 'app_localizations.dart';
 export 'cache.dart';
 export 'color.dart';
-export 'compute.dart';
-export 'constant.dart';
-export 'context.dart';
 export 'converter.dart';
 export 'datetime.dart';
 export 'fixed.dart';
@@ -18,24 +20,16 @@ export 'link.dart';
 export 'lock.dart';
 export 'measure.dart';
 export 'mixin.dart';
-export 'navigation.dart';
-export 'navigator.dart';
 export 'network.dart';
-export 'num.dart';
 export 'package.dart';
 export 'path.dart';
 export 'picker.dart';
-export 'preferences.dart';
-export 'print.dart';
 export 'protocol.dart';
 export 'proxy.dart';
 export 'render.dart';
-export 'request.dart';
 export 'scroll.dart';
 export 'string.dart';
 export 'system.dart';
 export 'text.dart';
-export 'tray.dart';
 export 'utils.dart';
-export 'window.dart';
 export 'yaml.dart';
