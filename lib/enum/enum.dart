@@ -4,8 +4,6 @@ import 'dart:io';
 
 import 'package:rmmy/common/color.dart';
 import 'package:rmmy/common/system.dart';
-import 'package:rmmy/views/dashboard/widgets/widgets.dart';
-import 'package:rmmy/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
@@ -284,39 +282,31 @@ enum FunctionTag {
 }
 
 enum DashboardWidget {
-  subscriptionInfo(GridItem(crossAxisCellCount: 8, child: SubscriptionInfo())),
-  networkSpeed(GridItem(crossAxisCellCount: 8, child: NetworkSpeed())),
-  outboundModeV2(GridItem(crossAxisCellCount: 8, child: OutboundModeV2())),
-  outboundMode(GridItem(crossAxisCellCount: 4, child: OutboundMode())),
-  trafficUsage(GridItem(crossAxisCellCount: 4, child: TrafficUsage())),
-  networkDetection(GridItem(crossAxisCellCount: 4, child: NetworkDetection())),
+  subscriptionInfo(8),
+  networkSpeed(8),
+  outboundModeV2(8),
+  outboundMode(4),
+  trafficUsage(4),
+  networkDetection(4),
   tunButton(
-    GridItem(crossAxisCellCount: 4, child: TUNButton()),
+    4,
     platforms: desktopPlatforms,
   ),
   vpnButton(
-    GridItem(crossAxisCellCount: 4, child: VpnButton()),
+    4,
     platforms: [SupportPlatform.Android],
   ),
   systemProxyButton(
-    GridItem(crossAxisCellCount: 4, child: SystemProxyButton()),
+    4,
     platforms: desktopPlatforms,
   ),
-  intranetIp(GridItem(crossAxisCellCount: 4, child: IntranetIP())),
-  memoryInfo(GridItem(crossAxisCellCount: 4, child: MemoryInfo()));
+  intranetIp(4),
+  memoryInfo(4);
 
-  final GridItem widget;
+  final int defaultCrossAxisCellCount;
   final List<SupportPlatform> platforms;
 
-  const DashboardWidget(this.widget, {this.platforms = SupportPlatform.values});
-
-  static DashboardWidget getDashboardWidget(GridItem gridItem) {
-    final dashboardWidgets = DashboardWidget.values;
-    final index = dashboardWidgets.indexWhere(
-      (item) => item.widget == gridItem,
-    );
-    return dashboardWidgets[index];
-  }
+  const DashboardWidget(this.defaultCrossAxisCellCount, {this.platforms = SupportPlatform.values});
 }
 
 enum GeodataLoader { standard, memconservative }

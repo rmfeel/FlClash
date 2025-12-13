@@ -8,6 +8,7 @@ import 'package:rmmy/providers/xboard_api.dart';
 import 'package:rmmy/providers/xboard_config.dart';
 import 'package:rmmy/state.dart';
 import 'package:rmmy/widgets/widgets.dart';
+import 'package:rmmy/views/dashboard/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -30,223 +31,149 @@ class _DashboardViewState extends ConsumerState<DashboardView> {
   @override
   void initState() {
     super.initState();
-    // 延迟执行，确�?ref 可用
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      _autoImportProfileIfNeeded();
+      _init();
     });
   }
 
-  @override
-  dispose() {
-    _isEditNotifier.dispose();
-    _addedWidgetsNotifier.dispose();
-    super.dispose();
-  }
-
-  /// 自动导入订阅配置（如果已登录且未导入�?
-  Future<void> _autoImportProfileIfNeeded() async {
-    final xboardConfig = ref.read(xboardConfigProvider);
-    final xboardApi = ref.read(xboardApiProvider);
-    
-    // 检查是否已登录
-    if (!xboardConfig.isLoggedIn || xboardConfig.authToken == null || xboardApi == null) {
-      return;
-    }
-    
-    // 检查并删除第三方配置文�?
-    await _removeThirdPartyProfiles();
-    
-    // 检查是否已存在配置文件
-    final profiles = globalState.config.profiles;
-    if (profiles.isNotEmpty) {
-      print('已存在配置文件，跳过自动导入');
-      return;
-    }
-    
-    try {
-      // 获取订阅信息
-      final result = await xboardApi.getSubscriptionInfo(xboardConfig.authToken!);
-      final subscribeUrl = result['data']?['subscribe_url'] as String?;
-      
-      if (subscribeUrl != null && subscribeUrl.isNotEmpty) {
-        print('仪表盘自动导入订阅配�? $subscribeUrl');
-        
-        // 导入订阅配置（标记为 Xboard 自动导入�?
-        await globalState.appController.addProfileFormURL(subscribeUrl, isXboardAuto: true);
-        
-        if (mounted) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(
-              content: Text('订阅配置已自动导入！'),
-              backgroundColor: Colors.green,
-              duration: Duration(seconds: 2),
-            ),
-          );
-        }
-      }
-    } catch (e) {
-      print('自动导入失败: $e');
-      // 静默失败，不影响用户体验
-    }
-  }
-
-  /// 检测并删除第三方配置文�?
-  Future<void> _removeThirdPartyProfiles() async {
-    try {
-      final xboardConfig = ref.read(xboardConfigProvider);
-      final xboardApi = ref.read(xboardApiProvider);
-      
-      // 获取当前所有配置文�?
-      final profiles = globalState.config.profiles.toList();
-      if (profiles.isEmpty) {
-        return;
-      }
-      
-      // 获取 Xboard 订阅 URL
-      String? xboardSubscribeUrl;
-      try {
-        if (xboardConfig.authToken != null && xboardApi != null) {
-          final result = await xboardApi.getSubscriptionInfo(xboardConfig.authToken!);
-          xboardSubscribeUrl = result['data']?['subscribe_url'] as String?;
-        }
-      } catch (e) {
-        print('获取 Xboard 订阅链接失败: $e');
-      }
-      
-      // 检测并删除第三方配置文�?
-      int deletedCount = 0;
-      for (final profile in profiles) {
-        // 判断是否为第三方配置文件（URL 不匹�?Xboard 订阅链接�?
-        final isThirdParty = xboardSubscribeUrl == null || profile.url != xboardSubscribeUrl;
-        
-        if (isThirdParty) {
-          print('检测到第三方配置文件，自动删除: ${profile.label ?? profile.id}');
-          await globalState.appController.deleteProfile(profile.id);
-          deletedCount++;
-        }
-      }
-      
-      if (deletedCount > 0 && mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text('已自动删�?$deletedCount 个第三方配置文件'),
-            backgroundColor: Colors.orange,
-            duration: const Duration(seconds: 3),
-          ),
+  Future<void> _init() async {
+    final appController = ref.read(appControllerProvider);
+    final isInit = await appController.getIsInit();
+    if (!isInit) {
+      if (mounted) {
+        final shouldStart = await showDialog<bool>(
+          context: context,
+          builder: (context) {
+            return CommonDialog(
+              title: Text(appLocalizations.clashCoreNotInit),
+              content: Text(appLocalizations.clashCoreNotInitDesc),
+              actions: [
+                TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pop(false);
+                  },
+                  child: Text(appLocalizations.cancel),
+                ),
+                TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pop(true);
+                  },
+                  child: Text(appLocalizations.ok),
+                ),
+              ],
+            );
+          },
         );
+        if (shouldStart == true) {
+          await appController.initClash();
+        }
       }
-    } catch (e) {
-      print('删除第三方配置文件失�? $e');
     }
-  }
-
-  Widget _buildIsEdit(_IsEditWidgetBuilder builder) {
-    return ValueListenableBuilder(
-      valueListenable: _isEditNotifier,
-      builder: (_, isEdit, _) {
-        return builder(isEdit);
-      },
-    );
-  }
-
-  Future<void> _handleConnection() async {
-    final coreStatus = ref.read(coreStatusProvider);
-    if (coreStatus == CoreStatus.connecting) {
-      return;
-    }
-    final tip = coreStatus == CoreStatus.connected
-        ? appLocalizations.forceRestartCoreTip
-        : appLocalizations.restartCoreTip;
-    final res = await globalState.showMessage(message: TextSpan(text: tip));
-    if (res != true) {
-      return;
-    }
-    globalState.appController.restartCore();
   }
 
   List<Widget> _buildActions(bool isEdit) {
+    if (!system.isSlash)
+      return [
+        if (isEdit)
+          ValueListenableBuilder(
+            valueListenable: _addedWidgetsNotifier,
+            builder: (_, addedChildren, child) {
+              if (addedChildren.isEmpty) {
+                return Container();
+              }
+              return child!;
+            },
+            child: IconButton(
+              onPressed: () {
+                _showAddWidgetsModal();
+              },
+              icon: Icon(Icons.add_circle),
+            ),
+          ),
+        FadeRotationScaleBox(
+          child: isEdit
+              ? IconButton(
+                  key: ValueKey(true),
+                  icon: Icon(Icons.save, key: ValueKey('save-icon')),
+                  onPressed: _handleUpdateIsEdit,
+                )
+              : IconButton(
+                  key: ValueKey(false),
+                  icon: Icon(Icons.edit, key: ValueKey('edit-icon')),
+                  onPressed: _handleUpdateIsEdit,
+                ),
+        )
+      ];
+    final coreStatus = ref.watch(coreStatusProvider);
     return [
       if (!isEdit)
-        Consumer(
-          builder: (_, ref, _) {
-            final coreStatus = ref.watch(coreStatusProvider);
+        ValueListenableBuilder(
+          valueListenable: coreStatus,
+          builder: (_, coreStatus, child) {
             return Tooltip(
               message: appLocalizations.coreStatus,
-              child: FadeScaleBox(
-                alignment: Alignment.centerRight,
-                child: coreStatus == CoreStatus.connected
-                    ? IconButton.filled(
-                        visualDensity: VisualDensity.compact,
-                        iconSize: 20,
-                        padding: EdgeInsets.zero,
-                        style: IconButton.styleFrom(
-                          backgroundColor: Colors.greenAccent,
-                          foregroundColor: switch (Theme.brightnessOf(
-                            context,
-                          )) {
-                            Brightness.light =>
-                              context.colorScheme.onSurfaceVariant,
-                            Brightness.dark =>
-                              context.colorScheme.onPrimaryFixedVariant,
-                          },
-                        ),
-                        onPressed: _handleConnection,
-                        icon: Icon(Icons.check, fontWeight: FontWeight.w900),
-                      )
-                    : FilledButton.icon(
-                        key: ValueKey(coreStatus),
-                        onPressed: _handleConnection,
-                        style: FilledButton.styleFrom(
-                          visualDensity: VisualDensity.compact,
-                          padding: EdgeInsets.symmetric(horizontal: 12),
-                          backgroundColor: switch (coreStatus) {
-                            CoreStatus.connecting => null,
-                            CoreStatus.connected => Colors.greenAccent,
-                            CoreStatus.disconnected =>
-                              context.colorScheme.error,
-                          },
-                          foregroundColor: switch (coreStatus) {
-                            CoreStatus.connecting => null,
-                            CoreStatus.connected => switch (Theme.brightnessOf(
-                              context,
-                            )) {
-                              Brightness.light =>
-                                context.colorScheme.onSurfaceVariant,
-                              Brightness.dark => null,
-                            },
-                            CoreStatus.disconnected =>
-                              context.colorScheme.onError,
-                          },
-                        ),
-                        icon: SizedBox(
-                          height: globalState.measure.bodyMediumHeight,
-                          width: globalState.measure.bodyMediumHeight,
-                          child: switch (coreStatus) {
-                            CoreStatus.connecting => Padding(
-                              padding: EdgeInsets.all(2),
-                              child: CircularProgressIndicator(
-                                strokeWidth: 3,
-                                color: context.colorScheme.onPrimary,
-                                backgroundColor: Colors.transparent,
-                              ),
-                            ),
-                            CoreStatus.connected => Icon(
-                              Icons.check_sharp,
-                              fontWeight: FontWeight.w900,
-                            ),
-                            CoreStatus.disconnected => Icon(
-                              Icons.restart_alt_sharp,
-                              fontWeight: FontWeight.w900,
-                            ),
-                          },
-                        ),
-                        label: Text(switch (coreStatus) {
-                          CoreStatus.connecting => appLocalizations.connecting,
-                          CoreStatus.connected => appLocalizations.connected,
-                          CoreStatus.disconnected =>
-                            appLocalizations.disconnected,
-                        }),
+              child: TextButton.icon(
+                onPressed: () {
+                  final renderProps =
+                      context.findRenderObject() as RenderBox;
+                  final offset = renderProps.localToGlobal(Offset.zero);
+                  final size = renderProps.size;
+                  final position = RelativeRect.fromLTRB(
+                    offset.dx + size.width,
+                    offset.dy + kToolbarHeight,
+                    offset.dx + size.width,
+                    offset.dy + size.height,
+                  );
+                  showMenu(
+                    context: context,
+                    position: position,
+                    items: [
+                      PopupMenuItem(
+                        child: Text(appLocalizations.restartCore),
+                        onTap: () {
+                          ref.read(appControllerProvider).initClash();
+                        },
                       ),
+                      PopupMenuItem(
+                        child: Text(appLocalizations.forceGc),
+                        onTap: () {
+                          ref.read(appControllerProvider).forceGc();
+                        },
+                      ),
+                    ],
+                  );
+                },
+                icon: AnimatedSwitcher(
+                  duration: Duration(milliseconds: 300),
+                  child: switch (coreStatus) {
+                    CoreStatus.connecting => SizedBox(
+                      width: 16,
+                      height: 16,
+                      child: Padding(
+                        padding: EdgeInsets.all(2),
+                        child: CircularProgressIndicator(
+                          strokeWidth: 3,
+                          color: context.colorScheme.onPrimary,
+                          backgroundColor: Colors.transparent,
+                        ),
+                      ),
+                    ),
+                    CoreStatus.connected => Icon(
+                      Icons.check_sharp,
+                      fontWeight: FontWeight.w900,
+                    ),
+                    CoreStatus.disconnected => Icon(
+                      Icons.restart_alt_sharp,
+                      fontWeight: FontWeight.w900,
+                    ),
+                  },
+                ),
+                label: Text(switch (coreStatus) {
+                  CoreStatus.connecting => appLocalizations.connecting,
+                  CoreStatus.connected => appLocalizations.connected,
+                  CoreStatus.disconnected =>
+                    appLocalizations.disconnected,
+                }),
               ),
             );
           },
@@ -321,7 +248,7 @@ class _DashboardViewState extends ConsumerState<DashboardView> {
     if (mounted) {
       await currentState.isTransformCompleter;
       final dashboardWidgets = currentState.children
-          .map((item) => DashboardWidget.getDashboardWidget(item))
+          .map((item) => (item.key as ValueKey<DashboardWidget>).value)
           .toList();
       ref
           .read(appSettingProvider.notifier)
@@ -341,16 +268,16 @@ class _DashboardViewState extends ConsumerState<DashboardView> {
           .where(
             (item) => item.platforms.contains(SupportPlatform.currentPlatform),
           )
-          .map((item) => item.widget),
+          .map((item) => item.gridItem),
     ];
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _addedWidgetsNotifier.value = DashboardWidget.values
           .where(
             (item) =>
-                !children.contains(item.widget) &&
+                !dashboardState.dashboardWidgets.contains(item) &&
                 item.platforms.contains(SupportPlatform.currentPlatform),
           )
-          .map((item) => item.widget)
+          .map((item) => item.gridItem)
           .toList();
     });
     return _buildIsEdit(
@@ -377,7 +304,7 @@ class _DashboardViewState extends ConsumerState<DashboardView> {
                                   SupportPlatform.currentPlatform,
                                 ),
                               )
-                              .map((item) => item.widget),
+                              .map((item) => item.gridItem),
                         ],
                         onUpdate: () {
                           _handleSave();
@@ -492,5 +419,67 @@ class _AddedContainerState extends State<_AddedContainer> {
         ),
       ],
     );
+  }
+}
+
+extension DashboardWidgetUI on DashboardWidget {
+  GridItem get gridItem {
+    return switch (this) {
+      DashboardWidget.subscriptionInfo => GridItem(
+          key: ValueKey(DashboardWidget.subscriptionInfo),
+          crossAxisCellCount: defaultCrossAxisCellCount,
+          child: const SubscriptionInfo(),
+        ),
+      DashboardWidget.networkSpeed => GridItem(
+          key: ValueKey(DashboardWidget.networkSpeed),
+          crossAxisCellCount: defaultCrossAxisCellCount,
+          child: const NetworkSpeed(),
+        ),
+      DashboardWidget.outboundModeV2 => GridItem(
+          key: ValueKey(DashboardWidget.outboundModeV2),
+          crossAxisCellCount: defaultCrossAxisCellCount,
+          child: const OutboundModeV2(),
+        ),
+      DashboardWidget.outboundMode => GridItem(
+          key: ValueKey(DashboardWidget.outboundMode),
+          crossAxisCellCount: defaultCrossAxisCellCount,
+          child: const OutboundMode(),
+        ),
+      DashboardWidget.trafficUsage => GridItem(
+          key: ValueKey(DashboardWidget.trafficUsage),
+          crossAxisCellCount: defaultCrossAxisCellCount,
+          child: const TrafficUsage(),
+        ),
+      DashboardWidget.networkDetection => GridItem(
+          key: ValueKey(DashboardWidget.networkDetection),
+          crossAxisCellCount: defaultCrossAxisCellCount,
+          child: const NetworkDetection(),
+        ),
+      DashboardWidget.tunButton => GridItem(
+          key: ValueKey(DashboardWidget.tunButton),
+          crossAxisCellCount: defaultCrossAxisCellCount,
+          child: const TUNButton(),
+        ),
+      DashboardWidget.vpnButton => GridItem(
+          key: ValueKey(DashboardWidget.vpnButton),
+          crossAxisCellCount: defaultCrossAxisCellCount,
+          child: const VpnButton(),
+        ),
+      DashboardWidget.systemProxyButton => GridItem(
+          key: ValueKey(DashboardWidget.systemProxyButton),
+          crossAxisCellCount: defaultCrossAxisCellCount,
+          child: const SystemProxyButton(),
+        ),
+      DashboardWidget.intranetIp => GridItem(
+          key: ValueKey(DashboardWidget.intranetIp),
+          crossAxisCellCount: defaultCrossAxisCellCount,
+          child: const IntranetIP(),
+        ),
+      DashboardWidget.memoryInfo => GridItem(
+          key: ValueKey(DashboardWidget.memoryInfo),
+          crossAxisCellCount: defaultCrossAxisCellCount,
+          child: const MemoryInfo(),
+        ),
+    };
   }
 }
