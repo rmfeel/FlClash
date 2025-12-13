@@ -1,9 +1,9 @@
-package com.follow.clash
+package com.rmmy.vpn
 
 import android.app.Activity
 import android.os.Bundle
-import com.follow.clash.common.QuickAction
-import com.follow.clash.common.action
+import com.rmmy.vpn.common.QuickAction
+import com.rmmy.vpn.common.action
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob

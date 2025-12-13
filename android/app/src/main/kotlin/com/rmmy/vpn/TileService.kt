@@ -1,12 +1,12 @@
-package com.follow.clash
+package com.rmmy.vpn
 
 import android.annotation.SuppressLint
 import android.os.Build
 import android.service.quicksettings.Tile
 import android.service.quicksettings.TileService
-import com.follow.clash.common.QuickAction
-import com.follow.clash.common.quickIntent
-import com.follow.clash.common.toPendingIntent
+import com.rmmy.vpn.common.QuickAction
+import com.rmmy.vpn.common.quickIntent
+import com.rmmy.vpn.common.toPendingIntent
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob

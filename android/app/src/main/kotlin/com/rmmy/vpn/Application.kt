@@ -1,8 +1,8 @@
-package com.follow.clash
+package com.rmmy.vpn
 
 import android.app.Application
 import android.content.Context
-import com.follow.clash.common.GlobalState
+import com.rmmy.vpn.common.GlobalState
 
 class Application : Application() {
 

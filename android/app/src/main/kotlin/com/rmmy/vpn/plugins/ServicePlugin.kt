@@ -1,15 +1,15 @@
-package com.follow.clash.plugins
+package com.rmmy.vpn.plugins
 
-import com.follow.clash.RunState
-import com.follow.clash.Service
-import com.follow.clash.State
-import com.follow.clash.awaitResult
-import com.follow.clash.common.Components
-import com.follow.clash.common.GlobalState
-import com.follow.clash.invokeMethodOnMainThread
-import com.follow.clash.models.AppState
-import com.follow.clash.service.models.NotificationParams
-import com.follow.clash.service.models.VpnOptions
+import com.rmmy.vpn.RunState
+import com.rmmy.vpn.Service
+import com.rmmy.vpn.State
+import com.rmmy.vpn.awaitResult
+import com.rmmy.vpn.common.Components
+import com.rmmy.vpn.common.GlobalState
+import com.rmmy.vpn.invokeMethodOnMainThread
+import com.rmmy.vpn.models.AppState
+import com.rmmy.vpn.service.models.NotificationParams
+import com.rmmy.vpn.service.models.VpnOptions
 import com.google.gson.Gson
 import io.flutter.embedding.engine.plugins.FlutterPlugin
 import io.flutter.plugin.common.MethodCall

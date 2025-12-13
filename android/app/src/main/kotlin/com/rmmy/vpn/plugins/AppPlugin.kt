@@ -1,4 +1,4 @@
-package com.follow.clash.plugins
+package com.rmmy.vpn.plugins
 
 import android.Manifest
 import android.app.Activity
@@ -17,13 +17,13 @@ import androidx.core.content.pm.ShortcutInfoCompat
 import androidx.core.content.pm.ShortcutManagerCompat
 import androidx.core.graphics.drawable.IconCompat
 import com.android.tools.smali.dexlib2.dexbacked.DexBackedDexFile
-import com.follow.clash.R
-import com.follow.clash.common.Components
-import com.follow.clash.common.GlobalState
-import com.follow.clash.common.QuickAction
-import com.follow.clash.common.quickIntent
-import com.follow.clash.getPackageIconPath
-import com.follow.clash.models.Package
+import com.rmmy.vpn.R
+import com.rmmy.vpn.common.Components
+import com.rmmy.vpn.common.GlobalState
+import com.rmmy.vpn.common.QuickAction
+import com.rmmy.vpn.common.quickIntent
+import com.rmmy.vpn.getPackageIconPath
+import com.rmmy.vpn.models.Package
 import com.google.gson.Gson
 import io.flutter.embedding.android.FlutterActivity
 import io.flutter.embedding.engine.plugins.FlutterPlugin

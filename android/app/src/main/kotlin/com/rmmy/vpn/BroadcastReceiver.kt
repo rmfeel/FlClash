@@ -1,11 +1,11 @@
-package com.follow.clash
+package com.rmmy.vpn
 
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
-import com.follow.clash.common.BroadcastAction
-import com.follow.clash.common.GlobalState
-import com.follow.clash.common.action
+import com.rmmy.vpn.common.BroadcastAction
+import com.rmmy.vpn.common.GlobalState
+import com.rmmy.vpn.common.action
 import kotlinx.coroutines.launch
 
 class BroadcastReceiver : BroadcastReceiver() {

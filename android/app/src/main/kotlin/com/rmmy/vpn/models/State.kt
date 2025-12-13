@@ -1,4 +1,4 @@
-package com.follow.clash.models
+package com.rmmy.vpn.models
 
 
 data class AppState(

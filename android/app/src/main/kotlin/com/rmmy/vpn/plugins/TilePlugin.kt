@@ -1,7 +1,7 @@
-package com.follow.clash.plugins
+package com.rmmy.vpn.plugins
 
-import com.follow.clash.common.Components
-import com.follow.clash.invokeMethodOnMainThread
+import com.rmmy.vpn.common.Components
+import com.rmmy.vpn.invokeMethodOnMainThread
 import io.flutter.embedding.engine.plugins.FlutterPlugin
 import io.flutter.plugin.common.MethodCall
 import io.flutter.plugin.common.MethodChannel
