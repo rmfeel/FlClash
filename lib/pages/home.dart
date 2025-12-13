@@ -49,7 +49,7 @@ class HomePage extends StatelessWidget {
                       .map(
                         (e) => NavigationDestination(
                           icon: e.icon,
-                          label: Intl.message(e.label.name),
+                          label: e.label.name,
                         ),
                       )
                       .toList(),

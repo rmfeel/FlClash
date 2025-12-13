@@ -246,7 +246,7 @@ class _PrimaryColorItemState extends ConsumerState<_PrimaryColorItem> {
       child: OptionsDialog<DynamicSchemeVariant>(
         title: appLocalizations.colorSchemes,
         options: DynamicSchemeVariant.values,
-        textBuilder: (item) => Intl.message('${item.name}Scheme'),
+        textBuilder: (item) => '${item.name}Scheme',
         value: schemeVariant,
       ),
     );
@@ -303,7 +303,7 @@ class _PrimaryColorItemState extends ConsumerState<_PrimaryColorItem> {
                   visualDensity: VisualDensity.compact,
                 ),
                 onPressed: _handleChangeSchemeVariant,
-                child: Text(Intl.message('${schemeVariant.name}Scheme')),
+                child: Text('${schemeVariant.name}Scheme'),
               ),
             if (_removablePrimaryColor != null)
               FilledButton(

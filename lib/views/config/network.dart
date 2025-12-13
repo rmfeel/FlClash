@@ -258,7 +258,7 @@ class RouteModeItem extends ConsumerWidget {
     );
     return ListItem<RouteMode>.options(
       title: Text(appLocalizations.routeMode),
-      subtitle: Text(Intl.message('routeMode_${routeMode.name}')),
+      subtitle: Text('routeMode_${routeMode.name}'),
       delegate: OptionsDelegate<RouteMode>(
         title: appLocalizations.routeMode,
         options: RouteMode.values,
@@ -270,7 +270,7 @@ class RouteModeItem extends ConsumerWidget {
               .read(networkSettingProvider.notifier)
               .updateState((state) => state.copyWith(routeMode: value));
         },
-        textBuilder: (routeMode) => Intl.message('routeMode_${routeMode.name}'),
+        textBuilder: (routeMode) => 'routeMode_${routeMode.name}',
         value: routeMode,
       ),
     );

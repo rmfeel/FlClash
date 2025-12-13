@@ -50,7 +50,7 @@ class HotKeyView extends StatelessWidget {
                 getHotKeyActionProvider(hotAction),
               );
               return ListItem(
-                title: Text(IntlExt.actionMessage(hotAction.name)),
+                title: Text('action_${hotAction.name}'),
                 subtitle: Text(
                   getSubtitle(hotKeyAction),
                   style: context.textTheme.bodyMedium?.copyWith(
@@ -166,7 +166,7 @@ class _HotKeyRecorderState extends State<HotKeyRecorder> {
         },
         autofocus: true,
         child: CommonDialog(
-          title: IntlExt.actionMessage(widget.hotKeyAction.action.name),
+          title: 'action_${widget.hotKeyAction.action.name}',
           actions: [
             TextButton(
               onPressed: () {

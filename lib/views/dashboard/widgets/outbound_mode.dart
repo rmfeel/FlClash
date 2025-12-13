@@ -61,7 +61,7 @@ class OutboundMode extends StatelessWidget {
                               value: item,
                             ),
                             title: Text(
-                              Intl.message(item.name),
+                              item.name,
                               style: Theme.of(
                                 context,
                               ).textTheme.bodyMedium?.toSoftBold,
@@ -129,7 +129,7 @@ class OutboundModeV2 extends StatelessWidget {
                                   height: height - 8.ap - 24,
                                   padding: EdgeInsets.all(4),
                                   child: Text(
-                                    Intl.message(item.name),
+                                    item.name,
                                     style: Theme.of(context)
                                         .textTheme
                                         .titleSmall

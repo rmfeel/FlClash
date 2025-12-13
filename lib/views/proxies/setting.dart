@@ -67,7 +67,7 @@ class ProxiesSetting extends StatelessWidget {
                   for (final item in ProxiesType.values)
                     SettingInfoCard(
                       Info(
-                        label: Intl.message(item.name),
+                        label: item.name,
                         iconData: _getIconWithProxiesType(item),
                       ),
                       isSelected: proxiesType == item,
@@ -144,7 +144,7 @@ class ProxiesSetting extends StatelessWidget {
                 children: [
                   for (final item in ProxyCardType.values)
                     SettingTextCard(
-                      Intl.message(item.name),
+                      item.name,
                       isSelected: item == cardType,
                       onPressed: () {
                         ref

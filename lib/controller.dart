@@ -489,7 +489,7 @@ class AppController {
       final submits = utils.parseReleaseBody(body);
       final textTheme = context.textTheme;
       final res = await globalState.showMessage(
-        title: appLocalizations.discoverNewVersion,
+        title: '发现新版本',
         message: TextSpan(
           text: '$tagName \n',
           style: textTheme.headlineSmall,
@@ -499,8 +499,8 @@ class AppController {
               TextSpan(text: '- $submit \n', style: textTheme.bodyMedium),
           ],
         ),
-        confirmText: appLocalizations.goDownload,
-        cancelText: isUser ? null : appLocalizations.noLongerRemind,
+        confirmText: '前往下载',
+        cancelText: isUser ? null : '不再提醒',
       );
       if (res == true) {
         launchUrl(Uri.parse('https://github.com/$repository/releases/latest'));
@@ -511,8 +511,8 @@ class AppController {
       }
     } else if (isUser) {
       globalState.showMessage(
-        title: appLocalizations.checkUpdate,
-        message: TextSpan(text: appLocalizations.checkUpdateError),
+        title: '检查更新',
+        message: TextSpan(text: '当前应用已经是最新版了'),
       );
     }
   }
@@ -522,8 +522,8 @@ class AppController {
       return;
     }
     final res = await globalState.showMessage(
-      title: appLocalizations.tip,
-      message: TextSpan(text: appLocalizations.cacheCorrupt),
+      title: '提示',
+      message: TextSpan(text: '缓存已损坏，是否清除？'),
     );
     if (res == true) {
       final file = File(await appPath.sharedPreferencesPath);
@@ -628,22 +628,22 @@ class AppController {
     return await globalState.showCommonDialog<bool>(
           dismissible: false,
           child: CommonDialog(
-            title: appLocalizations.disclaimer,
+            title: '免责声明',
             actions: [
               TextButton(
                 onPressed: () {
                   Navigator.of(context).pop<bool>(false);
                 },
-                child: Text(appLocalizations.exit),
+                child: Text('退出'),
               ),
               TextButton(
                 onPressed: () {
                   Navigator.of(context).pop<bool>(true);
                 },
-                child: Text(appLocalizations.agree),
+                child: Text('同意'),
               ),
             ],
-            child: Text(appLocalizations.disclaimerDesc),
+            child: Text('本软件仅供学习交流、科学研究等非商业用途使用，严禁用于商业目的。任何商业行为如有发生均与本软件无关。'),
           ),
         ) ??
         false;
@@ -657,9 +657,9 @@ class AppController {
       return;
     }
     await globalState.showMessage(
-      title: appLocalizations.dataCollectionTip,
+      title: '数据收集通知',
       cancelable: false,
-      message: TextSpan(text: appLocalizations.dataCollectionContent),
+      message: TextSpan(text: '本应用使用Firebase Crashlytics收集崩溃信息以改进应用稳定性。\n收集的数据包括设备信息和崩溃详情，但不包含个人敏感数据。\n您可以在设置中禁用此功能。'),
     );
     _ref
         .read(appSettingProvider.notifier)
@@ -1000,5 +1000,4 @@ class AppController {
     } finally {
       _ref.read(loadingProvider.notifier).stop();
     }
-  }
 }

@@ -116,7 +116,6 @@ class ApplicationState extends ConsumerState<Application> {
           debugShowCheckedModeBanner: false,
           navigatorKey: globalState.navigatorKey,
           localizationsDelegates: const [
-            AppLocalizations.delegate,
             GlobalMaterialLocalizations.delegate,
             GlobalCupertinoLocalizations.delegate,
             GlobalWidgetsLocalizations.delegate,
@@ -132,8 +131,6 @@ class ApplicationState extends ConsumerState<Application> {
           },
           scrollBehavior: BaseScrollBehavior(),
           title: appName,
-          locale: utils.getLocaleForString(locale),
-          supportedLocales: AppLocalizations.delegate.supportedLocales,
           themeMode: themeProps.themeMode,
           theme: ThemeData(
             useMaterial3: true,

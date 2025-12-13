@@ -95,7 +95,7 @@ class Build {
 
   static String get appName => 'FlClash';
 
-  static String get coreName => 'FlClashCore';
+  static String get coreName => 'RMMYCore';
 
   static String get libName => 'libclash';
 
@@ -280,7 +280,7 @@ class Build {
     final targetPath = join(
       outDir,
       target.name,
-      'FlClashHelperService${target.executableExtensionName}',
+      'RMMYHelperService${target.executableExtensionName}',
     );
     await File(outPath).copy(targetPath);
   }

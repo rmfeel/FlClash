@@ -1,7 +1,7 @@
 import 'dart:async';
 
+import 'package:fl_clash/common/app_localizations.dart';
 import 'package:fl_clash/common/common.dart';
-import 'package:fl_clash/enum/enum.dart';
 import 'package:fl_clash/manager/window_manager.dart';
 import 'package:fl_clash/providers/providers.dart';
 import 'package:fl_clash/state.dart';
@@ -226,7 +226,7 @@ class AppSidebarContainer extends ConsumerWidget {
                                     .map(
                                       (e) => NavigationRailDestination(
                                         icon: e.icon,
-                                        label: Text(Intl.message(e.label.name)),
+                                        label: Text(e.label.name),
                                       ),
                                     )
                                     .toList(),

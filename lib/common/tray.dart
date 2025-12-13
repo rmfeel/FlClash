@@ -1,12 +1,12 @@
 import 'dart:io';
 
-import 'package:fl_clash/common/iterable.dart';
-import 'package:fl_clash/enum/enum.dart';
+import 'package:fl_clash/common/common.dart';
 import 'package:fl_clash/models/models.dart';
 import 'package:fl_clash/state.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:intl/intl.dart';
 import 'package:tray_manager/tray_manager.dart';
+import 'package:window_manager/window_manager.dart';
 
 import 'app_localizations.dart';
 import 'constant.dart';
@@ -61,14 +61,14 @@ class Tray {
     }
     List<MenuItem> menuItems = [];
     final showMenuItem = MenuItem(
-      label: appLocalizations.show,
+      label: '显示',
       onClick: (_) {
         window?.show();
       },
     );
     menuItems.add(showMenuItem);
     final startMenuItem = MenuItem.checkbox(
-      label: trayState.isStart ? appLocalizations.stop : appLocalizations.start,
+      label: trayState.isStart ? '停止' : '启动',
       onClick: (_) async {
         globalState.appController.updateStart();
       },
@@ -77,7 +77,7 @@ class Tray {
     menuItems.add(startMenuItem);
     if (system.isMacOS) {
       final speedStatistics = MenuItem.checkbox(
-        label: appLocalizations.speedStatistics,
+        label: '速度统计',
         onClick: (_) async {
           globalState.appController.updateSpeedStatistics();
         },
@@ -89,7 +89,7 @@ class Tray {
     for (final mode in Mode.values) {
       menuItems.add(
         MenuItem.checkbox(
-          label: Intl.message(mode.name),
+          label: mode.name,
           onClick: (_) {
             globalState.appController.changeMode(mode);
           },
@@ -132,7 +132,7 @@ class Tray {
     if (trayState.isStart) {
       menuItems.add(
         MenuItem.checkbox(
-          label: appLocalizations.tun,
+          label: '虚拟网卡',
           onClick: (_) {
             globalState.appController.updateTun();
           },
@@ -141,7 +141,7 @@ class Tray {
       );
       menuItems.add(
         MenuItem.checkbox(
-          label: appLocalizations.systemProxy,
+          label: '系统代理',
           onClick: (_) {
             globalState.appController.updateSystemProxy();
           },
@@ -151,14 +151,14 @@ class Tray {
       menuItems.add(MenuItem.separator());
     }
     final autoStartMenuItem = MenuItem.checkbox(
-      label: appLocalizations.autoLaunch,
+      label: '自启动',
       onClick: (_) async {
         globalState.appController.updateAutoLaunch();
       },
       checked: trayState.autoLaunch,
     );
     final copyEnvVarMenuItem = MenuItem(
-      label: appLocalizations.copyEnvVar,
+      label: '复制环境变量',
       onClick: (_) async {
         await _copyEnv(trayState.port);
       },
@@ -167,7 +167,7 @@ class Tray {
     menuItems.add(copyEnvVarMenuItem);
     menuItems.add(MenuItem.separator());
     final exitMenuItem = MenuItem(
-      label: appLocalizations.exit,
+      label: '退出',
       onClick: (_) async {
         await globalState.appController.handleExit();
       },

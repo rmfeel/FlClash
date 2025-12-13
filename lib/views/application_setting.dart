@@ -265,7 +265,7 @@ class ApplicationSettingView extends StatelessWidget {
 
   String getLocaleString(Locale? locale) {
     if (locale == null) return appLocalizations.defaultText;
-    return Intl.message(locale.toString());
+    return locale.toString();
   }
 
   @override

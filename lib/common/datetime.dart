@@ -18,24 +18,24 @@ extension DateTimeExtension on DateTime {
     final days = difference.inDays;
     if (days >= 365) {
       final years = (days / 365).floor();
-      return appLocalizations.yearsAgo(years);
+      return '$years 年前';
     }
     if (days >= 30) {
       final months = (days / 30).floor();
-      return appLocalizations.monthsAgo(months);
+      return '$months 个月前';
     }
     if (days >= 1) {
-      return appLocalizations.daysAgo(days);
+      return '$days 天前';
     }
     final hours = difference.inHours;
     if (hours >= 1) {
-      return appLocalizations.hoursAgo(hours);
+      return '$hours 小时前';
     }
     final minutes = difference.inMinutes;
     if (minutes >= 1) {
-      return appLocalizations.minutesAgo(minutes);
+      return '$minutes 分钟前';
     }
-    return appLocalizations.justNow;
+    return '刚刚';
   }
 
   String get show {

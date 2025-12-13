@@ -141,7 +141,7 @@ class BackupAndRecovery extends ConsumerWidget {
       child: OptionsDialog<RecoveryStrategy>(
         title: appLocalizations.recoveryStrategy,
         options: RecoveryStrategy.values,
-        textBuilder: (mode) => Intl.message('recoveryStrategy_${mode.name}'),
+        textBuilder: (mode) => 'recoveryStrategy_${mode.name}',
         value: recoveryStrategy,
       ),
     );
@@ -287,7 +287,7 @@ class BackupAndRecovery extends ConsumerWidget {
                     _handleUpdateRecoveryStrategy(ref);
                   },
                   child: Text(
-                    Intl.message('recoveryStrategy_${recoveryStrategy.name}'),
+                    'recoveryStrategy_${recoveryStrategy.name}',
                   ),
                 ),
               );
