@@ -1,4 +1,4 @@
-import 'package:rmmy/common/common.dart';
+import 'package:rmmy/common/safe_common.dart';
 import 'package:rmmy/enum/enum.dart';
 import 'package:rmmy/models/selector.dart';
 import 'package:flutter/services.dart';

@@ -2,7 +2,7 @@ import 'dart:io';
 import 'dart:isolate';
 import 'dart:typed_data';
 
-import 'package:rmmy/common/common.dart';
+import 'package:rmmy/common/safe_common.dart';
 import 'package:rmmy/core/controller.dart';
 import 'package:rmmy/enum/enum.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
