@@ -1,7 +1,7 @@
-import 'package:fl_clash/common/common.dart';
-import 'package:fl_clash/providers/xboard_api.dart';
-import 'package:fl_clash/providers/xboard_config.dart';
-import 'package:fl_clash/widgets/widgets.dart';
+import 'package:rmmy/common/common.dart';
+import 'package:rmmy/providers/xboard_api.dart';
+import 'package:rmmy/providers/xboard_config.dart';
+import 'package:rmmy/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -39,7 +39,7 @@ class _SubscriptionInfoState extends ConsumerState<SubscriptionInfo> {
     try {
       final result = await api.getSubscriptionInfo(config.authToken!);
       if (mounted) {
-        print('订阅信息：${result['data']}');
+        print('订阅信息�?{result['data']}');
         setState(() {
           _subscriptionData = result['data'];
           _isLoading = false;
@@ -49,7 +49,7 @@ class _SubscriptionInfoState extends ConsumerState<SubscriptionInfo> {
       print('加载订阅信息失败: $e');
       if (mounted) {
         setState(() {
-          _error = '加载失败：${e.toString()}';
+          _error = '加载失败�?{e.toString()}';
           _isLoading = false;
         });
       }
@@ -93,7 +93,7 @@ class _SubscriptionInfoState extends ConsumerState<SubscriptionInfo> {
           child: Container(
             padding: baseInfoEdgeInsets,
             child: const Center(
-              child: Text('未登录', style: TextStyle(color: Colors.grey)),
+              child: Text('未登�?, style: TextStyle(color: Colors.grey)),
             ),
           ),
         ),

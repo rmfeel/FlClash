@@ -1,3 +1,3 @@
-import 'package:fl_clash/l10n/l10n.dart';
+import 'package:rmmy/l10n/l10n.dart';
 
 final appLocalizations = AppLocalizations.current;

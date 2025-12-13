@@ -1,6 +1,6 @@
-import 'package:fl_clash/common/common.dart';
-import 'package:fl_clash/models/models.dart';
-import 'package:fl_clash/state.dart';
+import 'package:rmmy/common/common.dart';
+import 'package:rmmy/models/models.dart';
+import 'package:rmmy/state.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'generated/config.g.dart';

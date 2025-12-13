@@ -4,13 +4,13 @@ import 'dart:math';
 import 'dart:ui';
 
 import 'package:collection/collection.dart';
-import 'package:fl_clash/common/common.dart';
-import 'package:fl_clash/enum/enum.dart';
-import 'package:fl_clash/models/models.dart';
+import 'package:rmmy/common/common.dart';
+import 'package:rmmy/enum/enum.dart';
+import 'package:rmmy/models/models.dart';
 import 'package:flutter/material.dart';
 
 const appName = 'FlClash';
-const appHelperService = 'FlClashHelperService';
+const appHelperService = 'RMMYHelperService';
 const coreName = 'clash.meta';
 const browserUa =
     'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36';

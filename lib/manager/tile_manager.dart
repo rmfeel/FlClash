@@ -1,6 +1,6 @@
-import 'package:fl_clash/models/app.dart';
-import 'package:fl_clash/plugins/tile.dart';
-import 'package:fl_clash/state.dart';
+import 'package:rmmy/models/app.dart';
+import 'package:rmmy/plugins/tile.dart';
+import 'package:rmmy/state.dart';
 import 'package:flutter/material.dart';
 
 class TileManager extends StatefulWidget {

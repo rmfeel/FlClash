@@ -1097,7 +1097,7 @@ class AppLocalizations {
   /// `Connectivity：`
   String get connectivity {
     return Intl.message(
-      'Connectivity：',
+      'Connectivity�?,
       name: 'connectivity',
       desc: '',
       args: [],

@@ -1,16 +1,16 @@
 import 'dart:io';
 
-import 'package:fl_clash/common/common.dart';
-import 'package:fl_clash/l10n/l10n.dart';
-import 'package:fl_clash/models/models.dart';
-import 'package:fl_clash/providers/providers.dart';
-import 'package:fl_clash/state.dart';
-import 'package:fl_clash/views/about.dart';
-import 'package:fl_clash/views/access.dart';
-import 'package:fl_clash/views/application_setting.dart';
-import 'package:fl_clash/views/config/config.dart';
-import 'package:fl_clash/views/hotkey.dart';
-import 'package:fl_clash/widgets/widgets.dart';
+import 'package:rmmy/common/common.dart';
+import 'package:rmmy/l10n/l10n.dart';
+import 'package:rmmy/models/models.dart';
+import 'package:rmmy/providers/providers.dart';
+import 'package:rmmy/state.dart';
+import 'package:rmmy/views/about.dart';
+import 'package:rmmy/views/access.dart';
+import 'package:rmmy/views/application_setting.dart';
+import 'package:rmmy/views/config/config.dart';
+import 'package:rmmy/views/hotkey.dart';
+import 'package:rmmy/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
@@ -326,7 +326,7 @@ class _DeveloperItem extends StatelessWidget {
   }
 }
 
-/// 账户信息项
+/// 账户信息�?
 class _AccountInfoItem extends ConsumerWidget {
   const _AccountInfoItem();
 
@@ -337,9 +337,9 @@ class _AccountInfoItem extends ConsumerWidget {
     return ListItem(
       leading: const Icon(Icons.person),
       title: const Text('账户信息'),
-      subtitle: Text(config.userEmail ?? '未登录'),
+      subtitle: Text(config.userEmail ?? '未登�?),
       onTap: () {
-        // 可以在这里添加跳转到账户详情页
+        // 可以在这里添加跳转到账户详情�?
       },
     );
   }
@@ -353,13 +353,13 @@ class _LogoutItem extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return ListItem(
       leading: const Icon(Icons.logout, color: Colors.red),
-      title: const Text('退出登录', style: TextStyle(color: Colors.red)),
+      title: const Text('退出登�?, style: TextStyle(color: Colors.red)),
       onTap: () async {
         final confirmed = await showDialog<bool>(
           context: context,
           builder: (context) => AlertDialog(
-            title: const Text('确认退出'),
-            content: const Text('退出登录后需要重新登录才能使用应用，确认退出吗？'),
+            title: const Text('确认退�?),
+            content: const Text('退出登录后需要重新登录才能使用应用，确认退出吗�?),
             actions: [
               TextButton(
                 onPressed: () => Navigator.of(context).pop(false),
@@ -378,7 +378,7 @@ class _LogoutItem extends ConsumerWidget {
           
           if (context.mounted) {
             ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(content: Text('已退出登录，请重新登录')),
+              const SnackBar(content: Text('已退出登录，请重新登�?)),
             );
           }
         }

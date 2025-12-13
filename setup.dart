@@ -95,9 +95,9 @@ class Build {
 
   static String get appName => 'FlClash';
 
-  static String get coreName => 'FlClashCore';
-
+  static String get coreName => 'RMMYCore';
   static String get libName => 'libclash';
+  static String get helperName => 'RMMYHelperService';
 
   static String get outDir => join(current, libName);
 

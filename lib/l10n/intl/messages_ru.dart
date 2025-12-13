@@ -226,7 +226,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "connectionsDesc": MessageLookupByLibrary.simpleMessage(
       "Просмотр текущих данных о соединениях",
     ),
-    "connectivity": MessageLookupByLibrary.simpleMessage("Связь："),
+    "connectivity": MessageLookupByLibrary.simpleMessage("Связь�?),
     "contactMe": MessageLookupByLibrary.simpleMessage("Свяжитесь со мной"),
     "content": MessageLookupByLibrary.simpleMessage("Содержание"),
     "contentScheme": MessageLookupByLibrary.simpleMessage("Контентная тема"),

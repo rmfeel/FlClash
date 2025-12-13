@@ -1,7 +1,7 @@
 import 'dart:async';
 
-import 'package:fl_clash/enum/enum.dart';
-import 'package:fl_clash/models/models.dart';
+import 'package:rmmy/enum/enum.dart';
+import 'package:rmmy/models/models.dart';
 import 'package:flutter/foundation.dart';
 
 abstract mixin class CoreEventListener {

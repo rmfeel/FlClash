@@ -1,9 +1,9 @@
 import 'dart:async';
 import 'dart:io';
 
-import 'package:fl_clash/plugins/app.dart';
-import 'package:fl_clash/plugins/tile.dart';
-import 'package:fl_clash/state.dart';
+import 'package:rmmy/plugins/app.dart';
+import 'package:rmmy/plugins/tile.dart';
+import 'package:rmmy/state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 

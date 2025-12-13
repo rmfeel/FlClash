@@ -1,7 +1,7 @@
-import 'package:fl_clash/common/common.dart';
-import 'package:fl_clash/enum/enum.dart';
-import 'package:fl_clash/models/models.dart';
-import 'package:fl_clash/widgets/pop_scope.dart';
+import 'package:rmmy/common/common.dart';
+import 'package:rmmy/enum/enum.dart';
+import 'package:rmmy/models/models.dart';
+import 'package:rmmy/widgets/pop_scope.dart';
 import 'package:flutter/material.dart';
 
 import 'chip.dart';

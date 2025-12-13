@@ -1,4 +1,4 @@
-import 'package:fl_clash/providers/xboard_config.dart';
+import 'package:rmmy/providers/xboard_config.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -40,7 +40,7 @@ class _XboardSettingsState extends ConsumerState<XboardSettings> {
     
     if (mounted) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('后端地址已保存')),
+        const SnackBar(content: Text('后端地址已保�?)),
       );
     }
   }
@@ -109,7 +109,7 @@ class _XboardSettingsState extends ConsumerState<XboardSettings> {
                 subtitle: Text(
                   config.backendUrl?.isNotEmpty == true
                       ? config.backendUrl!
-                      : '未配置',
+                      : '未配�?,
                 ),
               ),
               if (config.isLoggedIn)

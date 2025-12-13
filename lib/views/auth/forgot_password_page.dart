@@ -1,4 +1,4 @@
-import 'package:fl_clash/providers/xboard_api.dart';
+import 'package:rmmy/providers/xboard_api.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -38,7 +38,7 @@ class _ForgotPasswordPageState extends ConsumerState<ForgotPasswordPage> {
 
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('重置邮件已发送，请查收')),
+          const SnackBar(content: Text('重置邮件已发送，请查�?)),
         );
         Navigator.of(context).pop();
       }
@@ -69,7 +69,7 @@ class _ForgotPasswordPageState extends ConsumerState<ForgotPasswordPage> {
               child: Column(
                 children: [
                   const Text(
-                    '输入您的邮箱，我们将发送密码重置链接',
+                    '输入您的邮箱，我们将发送密码重置链�?,
                     textAlign: TextAlign.center,
                   ),
                   const SizedBox(height: 24),
@@ -82,7 +82,7 @@ class _ForgotPasswordPageState extends ConsumerState<ForgotPasswordPage> {
                     ),
                     keyboardType: TextInputType.emailAddress,
                     validator: (value) {
-                      if (value == null || value.isEmpty) return '请输入邮箱';
+                      if (value == null || value.isEmpty) return '请输入邮�?;
                       if (!value.contains('@')) return '请输入有效的邮箱地址';
                       return null;
                     },
@@ -96,7 +96,7 @@ class _ForgotPasswordPageState extends ConsumerState<ForgotPasswordPage> {
                             width: 20,
                             child: CircularProgressIndicator(strokeWidth: 2),
                           )
-                        : const Text('发送重置邮件'),
+                        : const Text('发送重置邮�?),
                   ),
                 ],
               ),

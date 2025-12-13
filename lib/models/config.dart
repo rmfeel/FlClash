@@ -1,5 +1,5 @@
-import 'package:fl_clash/common/common.dart';
-import 'package:fl_clash/enum/enum.dart';
+import 'package:rmmy/common/common.dart';
+import 'package:rmmy/enum/enum.dart';
 import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
@@ -55,7 +55,7 @@ List<DashboardWidget> dashboardWidgetsSafeFormJson(
             .toList() ??
         defaultDashboardWidgets;
     
-    // 强制确保订阅信息卡片始终在第一个位置
+    // 强制确保订阅信息卡片始终在第一个位�?
     widgets.remove(DashboardWidget.subscriptionInfo);
     widgets.insert(0, DashboardWidget.subscriptionInfo);
     

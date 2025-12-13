@@ -4,13 +4,13 @@ import 'dart:io';
 import 'dart:isolate';
 
 import 'package:archive/archive.dart';
-import 'package:fl_clash/common/archive.dart';
-import 'package:fl_clash/core/core.dart';
-import 'package:fl_clash/enum/enum.dart';
-import 'package:fl_clash/plugins/app.dart';
-import 'package:fl_clash/providers/providers.dart';
-import 'package:fl_clash/state.dart';
-import 'package:fl_clash/widgets/dialog.dart';
+import 'package:rmmy/common/archive.dart';
+import 'package:rmmy/core/core.dart';
+import 'package:rmmy/enum/enum.dart';
+import 'package:rmmy/plugins/app.dart';
+import 'package:rmmy/providers/providers.dart';
+import 'package:rmmy/state.dart';
+import 'package:rmmy/widgets/dialog.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -613,7 +613,7 @@ class AppController {
 
   void initLink() {
     linkManager.initAppLinksListen((url) async {
-      // 禁止第三方配置文件导入
+      // 禁止第三方配置文件导�?
       final siteName = _ref.read(xboardConfigProvider).siteName;
       await globalState.showMessage(
         title: '不支持第三方配置',
@@ -683,7 +683,7 @@ class AppController {
   }
 
   Future<void> addProfileFormURL(String url, {bool isXboardAuto = false}) async {
-    // 禁止第三方配置文件导入
+    // 禁止第三方配置文件导�?
     if (!isXboardAuto) {
       final siteName = _ref.read(xboardConfigProvider).siteName;
       await globalState.showMessage(
@@ -713,7 +713,7 @@ class AppController {
   }
 
   Future<void> addProfileFormFile() async {
-    // 禁止第三方配置文件导入
+    // 禁止第三方配置文件导�?
     final siteName = _ref.read(xboardConfigProvider).siteName;
     await globalState.showMessage(
       title: '不支持第三方配置',
@@ -724,7 +724,7 @@ class AppController {
   }
 
   Future<void> addProfileFormQrCode() async {
-    // 禁止第三方配置文件导入
+    // 禁止第三方配置文件导�?
     final siteName = _ref.read(xboardConfigProvider).siteName;
     await globalState.showMessage(
       title: '不支持第三方配置',

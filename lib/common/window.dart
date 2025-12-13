@@ -1,8 +1,8 @@
 import 'dart:io';
 
-import 'package:fl_clash/common/common.dart';
-import 'package:fl_clash/models/config.dart';
-import 'package:fl_clash/state.dart';
+import 'package:rmmy/common/common.dart';
+import 'package:rmmy/models/config.dart';
+import 'package:rmmy/state.dart';
 import 'package:flutter/material.dart';
 import 'package:screen_retriever/screen_retriever.dart';
 import 'package:window_manager/window_manager.dart';

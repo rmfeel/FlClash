@@ -1,4 +1,4 @@
-import 'package:fl_clash/providers/xboard_api.dart';
+import 'package:rmmy/providers/xboard_api.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -57,7 +57,7 @@ class _RegisterPageState extends ConsumerState<RegisterPage> {
     } catch (e) {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('注册失败：${e.toString()}')),
+          SnackBar(content: Text('注册失败�?{e.toString()}')),
         );
       }
     } finally {
@@ -89,7 +89,7 @@ class _RegisterPageState extends ConsumerState<RegisterPage> {
                     ),
                     keyboardType: TextInputType.emailAddress,
                     validator: (value) {
-                      if (value == null || value.isEmpty) return '请输入邮箱';
+                      if (value == null || value.isEmpty) return '请输入邮�?;
                       if (!value.contains('@')) return '请输入有效的邮箱地址';
                       return null;
                     },
@@ -104,8 +104,8 @@ class _RegisterPageState extends ConsumerState<RegisterPage> {
                     ),
                     obscureText: true,
                     validator: (value) {
-                      if (value == null || value.isEmpty) return '请输入密码';
-                      if (value.length < 6) return '密码至少6位';
+                      if (value == null || value.isEmpty) return '请输入密�?;
+                      if (value.length < 6) return '密码至少6�?;
                       return null;
                     },
                   ),
@@ -120,7 +120,7 @@ class _RegisterPageState extends ConsumerState<RegisterPage> {
                     obscureText: true,
                     validator: (value) {
                       if (value != _passwordController.text) {
-                        return '两次密码不一致';
+                        return '两次密码不一�?;
                       }
                       return null;
                     },
@@ -129,7 +129,7 @@ class _RegisterPageState extends ConsumerState<RegisterPage> {
                   TextFormField(
                     controller: _inviteCodeController,
                     decoration: const InputDecoration(
-                      labelText: '邀请码（选填）',
+                      labelText: '邀请码（选填�?,
                       prefixIcon: Icon(Icons.card_giftcard),
                       border: OutlineInputBorder(),
                     ),

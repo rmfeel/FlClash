@@ -3,10 +3,10 @@ import 'dart:convert';
 import 'dart:io';
 import 'dart:isolate';
 
-import 'package:fl_clash/common/app_localizations.dart';
-import 'package:fl_clash/common/constant.dart';
-import 'package:fl_clash/common/system.dart';
-import 'package:fl_clash/models/models.dart';
+import 'package:rmmy/common/app_localizations.dart';
+import 'package:rmmy/common/constant.dart';
+import 'package:rmmy/common/system.dart';
+import 'package:rmmy/models/models.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 

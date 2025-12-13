@@ -2,12 +2,12 @@ import 'dart:convert';
 import 'package:dio/dio.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:fl_clash/models/xboard_config.dart' as models;
-import 'package:fl_clash/state.dart';
+import 'package:rmmy/models/xboard_config.dart' as models;
+import 'package:rmmy/state.dart';
 
 part 'generated/xboard_config.g.dart';
 
-// 默认后端地址 - 在这里修改你的 Xboard 后端地址
+// 默认后端地址 - 在这里修改你�?Xboard 后端地址
 const String defaultBackendUrl = 'https://cdn.98kjc.icu';
 
 @riverpod
@@ -53,7 +53,7 @@ class XboardConfig extends _$XboardConfig {
     required String email,
   }) async {
     // 获取站点名称
-    String siteName = 'Xboard'; // 默认值
+    String siteName = 'Xboard'; // 默认�?
     try {
       if (state.backendUrl != null && state.backendUrl!.isNotEmpty) {
         final dio = Dio(BaseOptions(baseUrl: state.backendUrl!));
@@ -82,7 +82,7 @@ class XboardConfig extends _$XboardConfig {
     );
     await _saveConfig();
     
-    // 退出登录时自动关闭VPN连接并清除订阅配置
+    // 退出登录时自动关闭VPN连接并清除订阅配�?
     try {
       if (globalState.isInit) {
         // 1. 关闭VPN连接
@@ -90,15 +90,15 @@ class XboardConfig extends _$XboardConfig {
           await globalState.appController.updateStatus(false);
         }
         
-        // 2. 删除所有订阅配置文件
+        // 2. 删除所有订阅配置文�?
         final profiles = globalState.config.profiles;
         for (final profile in profiles) {
           await globalState.appController.deleteProfile(profile.id);
         }
       }
     } catch (e) {
-      // 忽略清理失败的错误
-      print('清理VPN和订阅配置失败: $e');
+      // 忽略清理失败的错�?
+      print('清理VPN和订阅配置失�? $e');
     }
   }
 

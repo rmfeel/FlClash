@@ -1,9 +1,9 @@
 import 'dart:async';
 
-import 'package:fl_clash/common/common.dart';
-import 'package:fl_clash/core/controller.dart';
-import 'package:fl_clash/models/models.dart';
-import 'package:fl_clash/widgets/widgets.dart';
+import 'package:rmmy/common/common.dart';
+import 'package:rmmy/core/controller.dart';
+import 'package:rmmy/models/models.dart';
+import 'package:rmmy/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:super_sliver_list/super_sliver_list.dart';

@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'dart:io';
 
-import 'package:fl_clash/common/common.dart';
+import 'package:rmmy/common/common.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 
@@ -43,8 +43,8 @@ class AppPath {
     return dirname(currentExecutablePath);
   }
 
-  String get corePath {
-    return join(executableDirPath, 'FlClashCore$executableExtension');
+  Future<String> get corePath async {
+    return join(await homeDirPath, 'RMMYCore$executableExtension');
   }
 
   String get helperPath {

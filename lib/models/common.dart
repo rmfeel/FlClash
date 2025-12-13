@@ -1,6 +1,6 @@
 import 'package:collection/collection.dart';
-import 'package:fl_clash/common/common.dart';
-import 'package:fl_clash/enum/enum.dart';
+import 'package:rmmy/common/common.dart';
+import 'package:rmmy/enum/enum.dart';
 import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
@@ -258,11 +258,11 @@ abstract class Traffic with _$Traffic {
 
 extension TrafficExt on Traffic {
   String get speedText {
-    return 'â†‘ ${up.traffic.show}/s   â†“ ${down.traffic.show}/s';
+    return 'â†?${up.traffic.show}/s   â†?${down.traffic.show}/s';
   }
 
   String get desc {
-    return '${up.traffic.show} â†‘ ${down.traffic.show} â†“';
+    return '${up.traffic.show} â†?${down.traffic.show} â†?;
   }
 
   String get trayTitle {

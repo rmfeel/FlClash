@@ -1,5 +1,8 @@
-import 'package:fl_clash/enum/enum.dart';
-import 'package:fl_clash/models/models.dart';
+import 'package:rmmy/enum/enum.dart';
+import 'subscription_info.dart';
+import 'clash_config.dart';
+import 'config.dart';
+import 'common.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'generated/core.freezed.dart';

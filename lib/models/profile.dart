@@ -2,9 +2,9 @@ import 'dart:io';
 import 'dart:isolate';
 import 'dart:typed_data';
 
-import 'package:fl_clash/common/common.dart';
-import 'package:fl_clash/core/controller.dart';
-import 'package:fl_clash/enum/enum.dart';
+import 'package:rmmy/common/common.dart';
+import 'package:rmmy/core/controller.dart';
+import 'package:rmmy/enum/enum.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 import 'clash_config.dart';
@@ -12,34 +12,8 @@ import 'clash_config.dart';
 part 'generated/profile.freezed.dart';
 part 'generated/profile.g.dart';
 
-@freezed
-abstract class SubscriptionInfo with _$SubscriptionInfo {
-  const factory SubscriptionInfo({
-    @Default(0) int upload,
-    @Default(0) int download,
-    @Default(0) int total,
-    @Default(0) int expire,
-  }) = _SubscriptionInfo;
+import 'subscription_info.dart';
 
-  factory SubscriptionInfo.fromJson(Map<String, Object?> json) =>
-      _$SubscriptionInfoFromJson(json);
-
-  factory SubscriptionInfo.formHString(String? info) {
-    if (info == null) return const SubscriptionInfo();
-    final list = info.split(';');
-    Map<String, int?> map = {};
-    for (final i in list) {
-      final keyValue = i.trim().split('=');
-      map[keyValue[0]] = int.tryParse(keyValue[1]);
-    }
-    return SubscriptionInfo(
-      upload: map['upload'] ?? 0,
-      download: map['download'] ?? 0,
-      total: map['total'] ?? 0,
-      expire: map['expire'] ?? 0,
-    );
-  }
-}
 
 @freezed
 abstract class Profile with _$Profile {

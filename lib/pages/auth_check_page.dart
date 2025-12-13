@@ -1,10 +1,10 @@
-import 'package:fl_clash/pages/pages.dart';
-import 'package:fl_clash/providers/xboard_config.dart';
-import 'package:fl_clash/views/auth/login_page.dart';
+import 'package:rmmy/pages/pages.dart';
+import 'package:rmmy/providers/xboard_config.dart';
+import 'package:rmmy/views/auth/login_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-/// 登录检查页面 - 应用启动时的第一个页面
+/// 登录检查页�?- 应用启动时的第一个页�?
 class AuthCheckPage extends ConsumerWidget {
   const AuthCheckPage({super.key});
 

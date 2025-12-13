@@ -7,3 +7,4 @@ export 'profile.dart';
 export 'selector.dart';
 export 'widget.dart';
 export 'xboard_config.dart';
+export 'subscription_info.dart';

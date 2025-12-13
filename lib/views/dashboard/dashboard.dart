@@ -1,13 +1,13 @@
 import 'dart:math';
 
 import 'package:defer_pointer/defer_pointer.dart';
-import 'package:fl_clash/common/common.dart';
-import 'package:fl_clash/enum/enum.dart';
-import 'package:fl_clash/providers/providers.dart';
-import 'package:fl_clash/providers/xboard_api.dart';
-import 'package:fl_clash/providers/xboard_config.dart';
-import 'package:fl_clash/state.dart';
-import 'package:fl_clash/widgets/widgets.dart';
+import 'package:rmmy/common/common.dart';
+import 'package:rmmy/enum/enum.dart';
+import 'package:rmmy/providers/providers.dart';
+import 'package:rmmy/providers/xboard_api.dart';
+import 'package:rmmy/providers/xboard_config.dart';
+import 'package:rmmy/state.dart';
+import 'package:rmmy/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -30,7 +30,7 @@ class _DashboardViewState extends ConsumerState<DashboardView> {
   @override
   void initState() {
     super.initState();
-    // 延迟执行，确保 ref 可用
+    // 延迟执行，确�?ref 可用
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _autoImportProfileIfNeeded();
     });
@@ -43,7 +43,7 @@ class _DashboardViewState extends ConsumerState<DashboardView> {
     super.dispose();
   }
 
-  /// 自动导入订阅配置（如果已登录且未导入）
+  /// 自动导入订阅配置（如果已登录且未导入�?
   Future<void> _autoImportProfileIfNeeded() async {
     final xboardConfig = ref.read(xboardConfigProvider);
     final xboardApi = ref.read(xboardApiProvider);
@@ -53,7 +53,7 @@ class _DashboardViewState extends ConsumerState<DashboardView> {
       return;
     }
     
-    // 检查并删除第三方配置文件
+    // 检查并删除第三方配置文�?
     await _removeThirdPartyProfiles();
     
     // 检查是否已存在配置文件
@@ -69,9 +69,9 @@ class _DashboardViewState extends ConsumerState<DashboardView> {
       final subscribeUrl = result['data']?['subscribe_url'] as String?;
       
       if (subscribeUrl != null && subscribeUrl.isNotEmpty) {
-        print('仪表盘自动导入订阅配置: $subscribeUrl');
+        print('仪表盘自动导入订阅配�? $subscribeUrl');
         
-        // 导入订阅配置（标记为 Xboard 自动导入）
+        // 导入订阅配置（标记为 Xboard 自动导入�?
         await globalState.appController.addProfileFormURL(subscribeUrl, isXboardAuto: true);
         
         if (mounted) {
@@ -90,13 +90,13 @@ class _DashboardViewState extends ConsumerState<DashboardView> {
     }
   }
 
-  /// 检测并删除第三方配置文件
+  /// 检测并删除第三方配置文�?
   Future<void> _removeThirdPartyProfiles() async {
     try {
       final xboardConfig = ref.read(xboardConfigProvider);
       final xboardApi = ref.read(xboardApiProvider);
       
-      // 获取当前所有配置文件
+      // 获取当前所有配置文�?
       final profiles = globalState.config.profiles.toList();
       if (profiles.isEmpty) {
         return;
@@ -113,10 +113,10 @@ class _DashboardViewState extends ConsumerState<DashboardView> {
         print('获取 Xboard 订阅链接失败: $e');
       }
       
-      // 检测并删除第三方配置文件
+      // 检测并删除第三方配置文�?
       int deletedCount = 0;
       for (final profile in profiles) {
-        // 判断是否为第三方配置文件（URL 不匹配 Xboard 订阅链接）
+        // 判断是否为第三方配置文件（URL 不匹�?Xboard 订阅链接�?
         final isThirdParty = xboardSubscribeUrl == null || profile.url != xboardSubscribeUrl;
         
         if (isThirdParty) {
@@ -129,14 +129,14 @@ class _DashboardViewState extends ConsumerState<DashboardView> {
       if (deletedCount > 0 && mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('已自动删除 $deletedCount 个第三方配置文件'),
+            content: Text('已自动删�?$deletedCount 个第三方配置文件'),
             backgroundColor: Colors.orange,
             duration: const Duration(seconds: 3),
           ),
         );
       }
     } catch (e) {
-      print('删除第三方配置文件失败: $e');
+      print('删除第三方配置文件失�? $e');
     }
   }
 
