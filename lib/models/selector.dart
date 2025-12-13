@@ -1,7 +1,11 @@
 import 'package:collection/collection.dart';
 import 'package:rmmy/common/safe_common.dart';
 import 'package:rmmy/enum/enum.dart';
-import 'package:rmmy/models/models.dart';
+import 'package:rmmy/models/core.dart';
+import 'package:rmmy/models/common.dart';
+import 'package:rmmy/models/profile.dart';
+import 'package:rmmy/models/config.dart';
+import 'package:rmmy/models/clash_config.dart';
 import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
