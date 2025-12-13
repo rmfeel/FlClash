@@ -1,6 +1,6 @@
 import 'package:rmmy/common/common.dart';
 import 'package:rmmy/enum/enum.dart';
-import 'package:rmmy/models/models.dart';
+import 'package:rmmy/models/app.dart';
 import 'package:rmmy/state.dart';
 import 'package:flutter/material.dart';
 

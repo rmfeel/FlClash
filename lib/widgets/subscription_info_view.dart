@@ -1,5 +1,5 @@
 import 'package:rmmy/common/common.dart';
-import 'package:rmmy/models/models.dart';
+import 'package:rmmy/models/subscription_info.dart';
 import 'package:flutter/material.dart';
 
 class SubscriptionInfoView extends StatelessWidget {
