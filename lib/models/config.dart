@@ -3,7 +3,8 @@ import 'package:rmmy/enum/enum.dart';
 import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-import 'models.dart';
+import 'clash_config.dart';
+import 'common.dart';
 
 part 'generated/config.freezed.dart';
 part 'generated/config.g.dart';
