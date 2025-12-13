@@ -7,7 +7,7 @@ plugins {
 }
 
 android {
-    namespace = "com.follow.clash.service"
+    namespace = "com.rmmy.vpn.service"
     compileSdk = 36
 
     defaultConfig {
