@@ -1,4 +1,4 @@
-import 'package:rmmy/common/common.dart';
+import 'package:rmmy/common/safe_common.dart';
 import 'package:flutter/material.dart';
 
 class CommonMinFilledButtonTheme extends StatelessWidget {

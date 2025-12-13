@@ -1,4 +1,4 @@
-import 'package:rmmy/common/common.dart';
+import 'package:rmmy/common/safe_common.dart';
 import 'package:rmmy/enum/enum.dart';
 import 'package:rmmy/models/widget.dart';
 import 'package:rmmy/widgets/pop_scope.dart';

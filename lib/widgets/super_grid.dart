@@ -2,7 +2,7 @@ import 'dart:async';
 import 'dart:math';
 
 import 'package:defer_pointer/defer_pointer.dart';
-import 'package:rmmy/common/common.dart';
+import 'package:rmmy/common/safe_common.dart';
 import 'package:rmmy/enum/enum.dart';
 import 'package:rmmy/widgets/activate_box.dart';
 import 'package:rmmy/widgets/card.dart';

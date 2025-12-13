@@ -1,4 +1,4 @@
-import 'package:rmmy/common/common.dart';
+import 'package:rmmy/common/safe_common.dart';
 import 'package:rmmy/models/common.dart';
 import 'package:rmmy/providers/providers.dart';
 import 'package:rmmy/state.dart';

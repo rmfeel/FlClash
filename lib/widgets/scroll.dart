@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:collection/collection.dart';
-import 'package:rmmy/common/common.dart';
+import 'package:rmmy/common/safe_common.dart';
 import 'package:rmmy/enum/enum.dart';
 import 'package:rmmy/state.dart';
 import 'package:flutter/material.dart';
